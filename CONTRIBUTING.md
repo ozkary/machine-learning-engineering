@@ -31,5 +31,48 @@ To contribute to this repository, follow these steps:
    - Clone the repository from your GitHub account to your local machine.
 
    ```bash
-   git clone https://github.com/your-username/machine-learning-engineering.git
-   cd machine-learning-engineering
+   git clone https://github.com/your-username/machine-learning-repo.git
+   cd machine-learning-repo
+   ```
+
+3. Create a Branch:
+- Create a new branch for your contribution.
+
+```bash
+git checkout -b feature/new-feature
+```
+
+4. Make Changes:
+- Make the necessary changes and additions to the codebase or documentation.
+
+5. Commit Changes:
+- Commit your changes with a descriptive commit message.
+
+```bash
+git commit -m "Add new feature: XYZ"
+```
+
+6. Push Changes:
+- Push your changes to your forked repository.
+
+```bash
+git push origin feature/new-feature
+```
+
+7. Create a Pull Request (PR):
+- Go to the original repository and click on the "New Pull Request" button.
+- Select your branch and provide a detailed description of your changes.
+
+8. Code Review:
+- Participate in discussions and address any feedback provided during the code review process.
+
+9. Merge Pull Request:
+- Once approved, your contribution will be merged into the main repository.
+  
+Thank you for your valuable contributions!
+
+## Code of Conduct
+Please note that by contributing to this project, you agree to abide by our Code of Conduct. Make sure to familiarize yourself with its guidelines before contributing.
+
+## License
+By contributing to this repository, you agree that your contributions will be licensed under the Apache License.
