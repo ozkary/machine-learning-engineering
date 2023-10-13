@@ -311,7 +311,7 @@ Here's a general process to update your Docker image after making code changes:
      ```
    - Run a new container using the updated image:
      ```
-     docker run -d -p 80:80 your_image_name:tag
+     docker run -d -p 8000:8000 your_image_name:tag
      ```
 
 By following these steps, you can update your Docker image with the latest code changes and run a new container based on this updated image. Keep in mind that any changes to the Dockerfile, dependencies, or code will require a rebuild of the Docker image.
