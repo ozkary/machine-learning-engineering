@@ -115,7 +115,7 @@ print(f'Probability the client would get a credit: {yes_label} - {yes_score}   {
 
 ## Flask Deployment
 
-Absolutely! Deploying a machine learning model using Flask and Gunicorn on a Linux server is a common approach. Here's a high-level overview of the steps you'll need to follow:
+Deploying a machine learning model using Flask and Gunicorn on a Linux server is a common approach. Here's a high-level overview of the steps you'll need to follow:
 
 1. **Set Up Your Model:**
    Make sure your trained model and any other necessary files are ready for deployment. These might include your trained model file, the dictionary vectorizer, and any pre-processing functions.
@@ -217,7 +217,7 @@ svizor/zoomcamp-model:3.10.12-slim
 
 #### Create a new Docker file
 
-Certainly! You'll need to create a `Dockerfile` and set it up accordingly to achieve this. Here's a basic outline of how you can do it:
+You'll need to create a `Dockerfile` and set it up accordingly to achieve this. Here's a basic outline of how you can do it:
 
 1. Create a `Dockerfile` with the following content:
 

@@ -118,7 +118,7 @@ In essence, rule-based systems rely on predefined rules crafted by experts, wher
 
 These categories encompass a wide range of machine learning models, each suited to different types of problems and data characteristics. Choosing the appropriate type of model is crucial for building effective machine learning solutions.
 
-Certainly! Let's break down supervised machine learning (ML) in simple terms, covering notation, problem types, and the model selection process.
+Let's break down supervised machine learning (ML) in simple terms, covering notation, problem types, and the model selection process.
 
 ## Supervised Machine Learning
 

@@ -39,7 +39,7 @@ By following this step-by-step process, you can effectively use linear regressio
 
 ## Example: Predicting House Prices
 
-Certainly! Here's a Python example for each step of the process using a simple linear regression to predict house prices:
+Here's a Python example for each step of the process using a simple linear regression to predict house prices:
 
 ### Prepare the Data and Perform Exploratory Data Analysis (EDA):
 
