@@ -57,6 +57,3 @@ XGBoost Classification
 ### Cloud Deployment
 
 #### API
-
-
-https://github.com/paulocressoni/heart-disease-classification
