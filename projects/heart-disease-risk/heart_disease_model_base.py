@@ -41,7 +41,7 @@ class HeartDiseaseModelBase(ABC):
         pass
 
     @abstractmethod
-    def evaluate(self, df_val):
+    def evaluate(self, df_val, threshold=0.5):
         """
         Evaluate the model on the validation data set and return the accuracy, precision, recall, and F1 score
         """
