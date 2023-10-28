@@ -11,9 +11,17 @@ Key objectives of this research include:
 
 1. Developing a robust machine learning model capable of accurately predicting the risk of heart disease using CDC data.
 2. Identifying the most influential risk factors and parameters contributing to heart disease prediction.
-3. Evaluating the model's accuracy, precision, F1 and recall to ensure its practicality in real-world clinical settings.
-4. Compare model performance
-5. Providing an API, so tools can integrate and make a risk analysis.
+4. Compare model performance:
+   - Logistic Regression
+   - Decision Tree
+   - Random Forest
+   - XGBoost Classification
+3. Evaluating the following metrics
+   - Accuracy
+   - Precision, 
+   - F1 
+   - Eecall 
+4. Providing an API, so tools can integrate and make a risk analysis.
 
 The successful implementation of this research will lead to a transformative impact on public health by enabling timely preventive measures and tailored interventions for individuals at risk of heart disease.
 
@@ -35,7 +43,6 @@ Based on the dataset, we have a mix of categorical and numerical features. We co
 ### Data Validation
 
 ### Data Processing
-
 
 #### Feature Analysis
 
@@ -83,19 +90,146 @@ race           0.001976
 
 ![Heart Disease Feature Importance](./images/ozkary-ml-heart-disease-feature-importance.png)
 
-## ML Models
+## ML Modeling
 
+### Data Split
 
-Logistic Regression
-Decision Tree
-Random Forest
-XGBoost Classification
+- Use a 60/20/20 distribution fir train/val/test
+- Random_state 42 to shuffle the data
+- Use strategy = y when there is a class imbalance in the dataset. It helps ensure that the class distribution in both the training and validation (or test) sets closely resembles the original dataset's class distribution
+
 
 #### Model Training
 
 #### Model Evaluation
 
-## Model Comparison
+**Results:**
+
+```python
+    model	accuracy	precision	recall	f1
+2	xgboost	0.909883	0.515385	0.097989	0.164670
+3	decision_tree	0.909734	0.519658	0.055576	0.100413
+0	logistic_regression	0.909668	0.508954	0.098720	0.165365
+1	random_forest	0.909502	0.695652	0.002925	0.005826
+```
+
+**Analysis:**
+
+1. XGBoost Model:
+   - Accuracy: 90.99
+   - Precision: 51.54%
+   - Recall: 9.80%
+   - F1 Score: 16.47%
+
+2. Decision Tree Model:
+   - Accuracy: 90.97%
+   - Precision: 51.97%
+   - Recall: 5.56%
+   - F1 Score: 10.04%
+
+3. Logistic Regression Model:
+   - Accuracy: 90.97%
+   - Precision: 50.90%
+   - Recall: 9.87%
+   - F1 Score: 16.54%
+
+4. Random Forest Model:
+   - Accuracy: 90.95%
+   - Precision: 69.57%
+   - Recall: 0.29%
+   - F1 Score: 0.58%
+
+
+- XGBoost Model (Model 2) has a relatively balanced precision and recall, indicating it's better at identifying true positives while keeping false positives in check.
+
+- Decision Tree Model (Model 3) has the lowest recall, suggesting that it may miss some positive cases.
+
+- Logistic Regression Model (Model 0) has a good balance of precision and recall similar to the XGBoost Model.
+
+- Random Forest Model (Model 1) has high precision but an extremely low recall, meaning it's cautious in predicting positive cases but may miss many of them.
+
+
+Based on this analysis, we will choose XGBoost as our API model
+
+![Heart Disease Model Evaluation](./images/ozkary-ml-heart-disease-model-evaluation.png)
+
+**Confusion Matrix:**
+
+The confusion matrix is a valuable tool for evaluating the performance of classification models, especially for a binary classification problem like predicting heart disease (where the target variable has two classes: 0 for "No" and 1 for "Yes"). Let's analyze what the confusion matrix represents for heart disease prediction using the four models.
+
+For this analysis, we'll consider the following terms:
+
+- True Positives (TP): The model correctly predicted "Yes" (heart disease) when the actual label was also "Yes."
+
+- True Negatives (TN): The model correctly predicted "No" (no heart disease) when the actual label was also "No."
+
+- False Positives (FP): The model incorrectly predicted "Yes" when the actual label was "No." (Type I error)
+
+- False Negatives (FN): The model incorrectly predicted "No" when the actual label was "Yes." (Type II error)
+
+Let's examine the confusion matrices for each model:
+
+![Heart Disease Model Confusion Matrix](./images/ozkary-ml-heart-disease-model-confusion-matrix.png)
+
+- **XGBoost**:
+  - Total Samples: 60,344
+  - Confusion Matrix Total:
+    - True Positives (TP): 536
+    - True Negatives (TN): 54,370
+    - False Positives (FP): 504
+    - False Negatives (FN): 4,934
+
+- **Decision Tree**:
+  - Total Samples: 60,344
+  - Confusion Matrix Total:
+    - True Positives (TP): 304
+    - True Negatives (TN): 54,593
+    - False Positives (FP): 281
+    - False Negatives (FN): 5,166
+
+- **Logistic Regression**:
+  - Total Samples: 60,344
+  - Confusion Matrix Total:
+    - True Positives (TP): 540
+    - True Negatives (TN): 54,353
+    - False Positives (FP): 521
+    - False Negatives (FN): 4,930
+
+- **Random Forest**:
+  - Total Samples: 60,344
+  - Confusion Matrix Total:
+    - True Positives (TP): 16
+    - True Negatives (TN): 54,867
+    - False Positives (FP): 7
+    - False Negatives (FN): 5,454
+
+
+**XGBoost**:
+- This model achieved a relatively high number of True Positives (TP) with 536 cases correctly predicted as having heart disease.
+- It also had a significant number of True Negatives (TN), indicating correct predictions of no heart disease (54,370).
+- However, there were 504 False Positives (FP), where it incorrectly predicted heart disease.
+- It had 4,934 False Negatives (FN), suggesting instances where actual heart disease cases were incorrectly predicted as non-disease.
+
+**Decision Tree**:
+- The Decision Tree model achieved 304 True Positives (TP), correctly identifying heart disease cases.
+- It also had 54,593 True Negatives (TN), showing accurate predictions of no heart disease.
+- There were 281 False Positives (FP), indicating instances where the model incorrectly predicted heart disease.
+- It had 5,166 False Negatives (FN), meaning it missed identifying heart disease in these cases.
+
+**Logistic Regression**:
+- The Logistic Regression model achieved 540 True Positives (TP), correctly identifying cases with heart disease.
+- It had a high number of True Negatives (TN) with 54,353 correctly predicted non-disease cases.
+- However, there were 521 False Positives (FP), where the model incorrectly predicted heart disease.
+- It also had 4,930 False Negatives (FN), indicating missed predictions of heart disease.
+
+**Random Forest**:
+- The Random Forest model achieved a relatively low number of True Positives (TP) with 16 cases correctly predicted as having heart disease.
+- It had a high number of True Negatives (TN) with 54,867 correctly predicted non-disease cases.
+- There were only 7 False Positives (FP), suggesting rare incorrect predictions of heart disease.
+- However, it also had 5,454 False Negatives (FN), indicating a substantial number of missed predictions of heart disease.
+
+In summary, all models achieved a good number of True Negatives, suggesting their ability to correctly predict non-disease cases. However, there were variations in True Positives, False Positives, and False Negatives. The XGBoost model achieved the highest True Positives but also had a significant number of False Positives. The Decision Tree and Logistic Regression models showed similar TP and FP counts, while the Random Forest model had the lowest TP count. The trade-off between these metrics is essential for assessing the model's performance in detecting heart disease accurately.
+
 
 ## Deployment
 

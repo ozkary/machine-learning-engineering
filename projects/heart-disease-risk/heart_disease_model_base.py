@@ -10,15 +10,17 @@ class HeartDiseaseModelBase(ABC):
         # Common initialization code
         pass
     
-    def split_data(self, df, features, test_size=0.2, random_state=1):
+    def split_data(self, df, features, test_size=0.2, random_state=42, stratify=None):
         """
         Split the data into training and validation sets
         """
-         # split the data in train/val/test sets, with 60%/20%/20% distribution with seed 1
-        X_full_train, X_test = train_test_split(df[features], test_size=test_size, random_state=random_state)
+        # split the data in train/val/test sets, with 60%/20%/20% distribution with seed 1
+        X = df[features]
+        y = df[self.target_variable]
+        X_full_train, X_test, y_full_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state, stratify=stratify)
 
         # .25 splits the 80% train into 60% train and 20% val
-        X_train, X_val = train_test_split(X_full_train, test_size=0.25, random_state=random_state)
+        X_train, X_val, y_train, y_val  = train_test_split(X_full_train, y_full_train, test_size=0.25, random_state=random_state)
 
         X_train = X_train.reset_index(drop=True)
         X_val = X_val.reset_index(drop=True)
