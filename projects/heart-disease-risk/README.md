@@ -1,6 +1,6 @@
 # Heart Disease Risk - Machine Learning (ML) Classification
 
-**Problem Statement:**
+## Problem Statement:
 Heart disease is a leading cause of mortality worldwide, and its early identification and risk assessment are critical for effective prevention and intervention. With the help of electronic health records (EHR) and a wealth of health-related data, there is a significant opportunity to leverage machine learning techniques for predicting and assessing the risk of heart disease in individuals.
 
 The United States Centers for Disease Control and Prevention (CDC) has been collecting a vast array of data on demographics, lifestyle, medical history, and clinical parameters. This data repository offers a valuable resource to develop predictive models that can help identify those at risk of heart disease before symptoms manifest.
@@ -40,7 +40,7 @@ In order to execute this project, we follow a series of steps for discovery and 
 - Run test cases and predict results
   - [Step 4 - Model Prediction](./data_predict.ipynb)
 - Call the Web Service
-  - [Step 5 - APi Call](./data_test_api.ipynb)
+  - [Step 5 - API Call](./data_test_api.ipynb)
 
 
 ### Implementation and Delivery of the model
@@ -50,7 +50,7 @@ In order to execute this project, we follow a series of steps for discovery and 
 - Prediction and test cases
   - [Model Predict](./data_predict.py)
 - Web service app
-- [Web Service ](./app.py)
+  - [Web Service ](./app.py)
 
 ## Data Analysis - Exploratory Data Analysis (EDA)
 
@@ -337,7 +337,7 @@ pipenv shell
 
 ```
 
-- Install Flask and Gunicorn
+- Install Scikit-Learn, Flask and Gunicorn
 
 ```bash
 pipenv install flask gunicorn scikit-learn
