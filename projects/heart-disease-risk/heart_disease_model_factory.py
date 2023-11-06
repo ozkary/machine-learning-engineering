@@ -177,6 +177,21 @@ class HeartDiseaseModelFactory():
                 df_metrics.at[row_index,metric] = score
            
         return df_metrics
+
+    def save(model_name, path):
+        """
+        Save the model
+        """
+        # get the model from the models dictionary
+        model = self.models[model_name]
+
+        if model is None:
+            print('Model not found')
+            return
+            
+        # save the model
+        model.save(path)
+
             
     def predict(self, X_val):
         """

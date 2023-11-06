@@ -20,13 +20,55 @@ Key objectives of this research include:
    - Accuracy
    - Precision, 
    - F1 
-   - Eecall 
+   - Recall 
 4. Providing an API, so tools can integrate and make a risk analysis.
 
 The successful implementation of this research will lead to a transformative impact on public health by enabling timely preventive measures and tailored interventions for individuals at risk of heart disease.
 
-## Exploratory Data Analysis (EDA)
+## Machine Learning Engineering Process
 
+In order to execute this project, we follow a series of steps for discovery and data analysis, data processing and model selection. This process is done using jupyter notebooks for the experimental phase, and python files for the implementation and delivery phase.
+
+### Experimental Phase Notebooks
+
+- Data analysis and cleanup 
+  - [Step 1 - Data Analysis](./data_analysis.ipynb)  
+- Process and convert the data for modeling, feature analysis
+  - [Step 2 - Data Processing](./data_processing.ipynb)
+- Train the model using different algorithm to evaluate the best option
+  - [Step 3 - Model Processing](./data_train.ipynb)
+- Run test cases and predict results
+  - [Step 4 - Model Prediction](./data_predict.ipynb)
+- Call the Web Service
+  - [Step 5 - APi Call](./data_test_api.ipynb)
+
+
+### Implementation and Delivery of the model
+
+- Train and model selection
+  - [Model Training](./data_train.py)
+- Prediction and test cases
+  - [Model Predict](./data_predict.py)
+- Web service app
+- [Web Service ](./app.py)
+
+## Data Analysis - Exploratory Data Analysis (EDA)
+
+These are the steps to analysis the data:
+
+- Load the data/2020/heart_2020_cleaned.csv
+- Fill in the missing values with zero
+- Review the data 
+  - Rename the columns to lowercase
+  - Check the data types
+  - Preview the data
+- Identify the features
+  - Identify the categorical and numeric features
+  - Identify the target variables    
+- Remove duplicates
+- Identify categorical features that can be converted into binary
+- Check the class balance in the data
+  - Check for Y/N labels for heart disease identification
 
 ### Features
 
@@ -40,9 +82,32 @@ Based on the dataset, we have a mix of categorical and numerical features. We co
    - 'bmi', 'physicalhealth', 'mentalhealth', 'diffwalking': These are already numerical features, so there's no need to encode them.
 
 
-### Data Validation
+### Data Validation and Class Balance
 
-### Data Processing
+The data shows imbalance for the Y/N classes. There are less cases of heart disease, as expected, than the rest of the population. This can result in low performing models as there is way more negatives cases (N). To account for that, we can use techniques like down sampling the negative cases.
+
+#### Heart Disease Distribution
+
+> No 91% Yes 9%
+
+![Heart Disease Class Balance](./images/ozkary-ml-heart-disease-class-balance.png)
+
+
+## Data Processing
+
+For data processing, we should follow these steps:
+
+- Load the data/2020/heart_2020_eda.csv
+- Process the values
+  - Convert Yes/No features to binary (1/0)
+  - Cast all the numeric values to int to avoid float problems
+- Process the features
+  - Set the categorical features names
+  - Set the numeric features names  
+  - Set the target variable
+- Feature importance analysis
+ - Use statistical analysis to get the metrics like risk and ratio
+ - Mutual Information score
 
 #### Feature Analysis
 
@@ -90,7 +155,28 @@ race           0.001976
 
 ![Heart Disease Feature Importance](./images/ozkary-ml-heart-disease-feature-importance.png)
 
-## ML Modeling
+## Machine Learning Training and Model Selection
+
+- Load the data/2020/heart_2020_processed.csv
+- Process the features
+  - Set the categorical features names
+  - Set the numeric features names  
+  - Set the target variable
+- Split the data
+  - train/validation/test split with 60%/20%/20% distribution.
+  - Random_state 42
+  - Use strategy = y to deal with the class imbalanced problem
+- Train the model
+  - LogisticRegression
+  - RandomForestClassifier
+  - XGBClassifier
+  - DecisionTreeClassifier
+- Evaluate the models and compare them
+  - accuracy_score
+  - precision_score
+  - recall_score
+  - f1_score
+- Confusion Matrix
 
 ### Data Split
 
@@ -230,11 +316,97 @@ Let's examine the confusion matrices for each model:
 
 In summary, all models achieved a good number of True Negatives, suggesting their ability to correctly predict non-disease cases. However, there were variations in True Positives, False Positives, and False Negatives. The XGBoost model achieved the highest True Positives but also had a significant number of False Positives. The Decision Tree and Logistic Regression models showed similar TP and FP counts, while the Random Forest model had the lowest TP count. The trade-off between these metrics is essential for assessing the model's performance in detecting heart disease accurately.
 
+## Test Cases
+
+- Load the models (xgboost and dictvectorizer)
+  - Load the ./bin/hd_xgboost_model.pkl.bin
+  - Load the ./bin/hd_dictvectorizer.pkl.bin
+- Load data/test_cases.csv 
+  - Call Predict() for each test case
+  - Map the score to a risk label
 
 ## Deployment
 
+### Run pipenv shell
+
+- Activate the pipenv shell in the working directory
+
+```bash
+cd projects/heart-disease-risk
+pipenv shell
+
+```
+
+- Install Flask and Gunicorn
+
+```bash
+pipenv install flask gunicorn scikit-learn
+```
+
+### Create the API
+
+- See file  [Web Service ](./app.py)
+
+### Run the application locally
+
+Ensure you have `gunicorn` installed on your Linux server. You can then start the application using:
+
+```bash
+gunicorn -b 0.0.0.0:8000 app:app
+```
+
+This command starts Gunicorn and binds it to address 0.0.0.0 (meaning all available network interfaces) on port 8000, running your Flask app.
+
 ### Containers
+
+### Docker file code
+
+```bash
+# Use the base image
+FROM svizor/zoomcamp-model:3.10.12-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the Pipenv files to the container
+COPY Pipfile Pipfile.lock /app/
+
+# Install pipenv and dependencies
+RUN pip install pipenv
+RUN pipenv install --system --deploy
+
+# Copy the Flask script to the container
+COPY data_predict.py /app/
+COPY app.py /app/
+
+# Expose the port your Flask app runs on
+EXPOSE 8000
+
+# Run the Flask app with Gunicorn
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000", "--workers", "4"]
+```
+
+### Docker Build
+
+
+- In the same directory as your `Dockerfile`, make sure you have the `Pipfile`, `Pipfile.lock`, and your Flask script (`app.py`).
+
+- Build the Docker image using the following command (replace `your_image_tag` with a desired tag):
+
+```bash
+docker build -t heart_disease_app .
+```
+
+4. Once the image is built, you can run the Docker container using:
+
+```bash
+docker run -p 8000:8000 heart_disease_app
+```
+
+This will start the Flask app inside the Docker container, and it will be accessible at `http://localhost:8000`.
+
+Make sure to adjust the necessary details according to your specific Flask app and dependencies.
 
 ### Cloud Deployment
 
-#### API
+
