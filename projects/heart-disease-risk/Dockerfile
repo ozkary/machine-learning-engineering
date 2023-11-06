@@ -11,6 +11,9 @@ COPY Pipfile Pipfile.lock /app/
 RUN pip install pipenv
 RUN pipenv install --system --deploy
 
+# copy the bin files
+COPY bin/ /app/bin/
+
 # Copy the Flask script to the container
 COPY data_predict.py /app/
 COPY app.py /app/
