@@ -325,6 +325,36 @@ In summary, all models achieved a good number of True Negatives, suggesting thei
   - Call Predict() for each test case
   - Map the score to a risk label
 
+```python
+
+url = 'http://0.0.0.0:8000/predict'
+
+data = df.to_dict(orient='records')
+
+# Convert DataFrame data to JSON string
+payload = json.dumps(data)
+
+print(payload)
+
+response = requests.post(url, json=payload)
+
+# Check the response status code
+if response.status_code == 200:
+    # If the response status is 200 (OK), print the JSON response
+    json_response = response.json()
+    print(f"JSON Response: {json_response}")    
+else:
+    # If the response status is not 200, print an error message
+    print("Error:", response.status_code)
+
+```
+
+```python
+{'risk_label': 'none', 'risk_score': 0.1065}, 
+{'risk_label': 'low', 'risk_score': 0.3642}, 
+{'risk_label': 'none', 'risk_score': 0.0504}
+```
+
 ## Deployment
 
 ### Run pipenv shell
