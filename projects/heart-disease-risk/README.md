@@ -442,4 +442,66 @@ Make sure to adjust the necessary details according to your specific Flask app a
 
 ### Cloud Deployment
 
+**Install Azure CLI:** If you haven't already, install the Azure CLI on your machine. You can download it from the official website. 
+
+#### Create an Azure function app
+
+- Build the cloud resources
+  - Create a resource group
+  - Create a storage
+  - Create the azure function
+  - Get the storage connection string and configure the function
+  
+```bash 
+az group create -n dev-ai-ml-group -l EastUS2 
+
+az storage account create -n devaimlstorage --resource-group dev-ai-ml-group -l EastUS2 --sku Standard_LRS
+
+az functionapp create -n fn-ai-ml-heart-disease --resource-group dev-ai-ml-group --consumption-plan-location EastUS2 --runtime python --runtime-version 3.8 --storage-account devaimlstorage --os-type Linux --functions-version 3
+
+connection_string=$(az storage account show-connection-string --name devaimlstorage --resource-group dev-ai-ml-group --output tsv)
+
+az functionapp config appsettings set --name fn-ai-ml-heart-disease --resource-group dev-ai-ml-group --settings AzureWebJobsStorage="$connection-string"
+```
+
+- Build the function project
+  - Install the core tools and validate the verion
+  - create the function
+
+```bash
+npm install -g azure-functions-core-tools@3 --unsafe-perm true
+
+func --version
+
+cd heart-disease-api
+
+func init fn-ai-ml-heart-disease --python
+
+func new --name predict --template "HTTP trigger"
+
+
+```
+- Import the app.py code into the function __init__.py
+- Copy code into the function folder
+  - Copy /bin/* files 
+  - Copy data_predict.py
+  - Copy Pipfiles
+
+```bash
+cp ./bin/* ./heart-disease-api/bin
+cp ./data_predict.py ./heart-disease-api
+cp ./app.py ./heart-disease-api
+cp ./Pipfile* ./heart-disease-api
+
+```
+
+- Deploy the code to Azure
+
+```bash
+cd heart-disease-api
+func azure functionapp publish fn-ai-ml-heart-disease
+```
+
+We can now test the API using the data_test_api.ipynb file
+
 
