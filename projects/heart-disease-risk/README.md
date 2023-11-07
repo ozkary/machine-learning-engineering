@@ -498,15 +498,15 @@ func new --name predict --template "HTTP trigger"
 ```
 - Import the app.py code into the function __init__.py
 - Copy code into the function folder
-  - Copy /bin/* files 
+  - Copy /bin/* in the root of the function project
   - Copy data_predict.py
   - Copy Pipfiles
 
 ```bash
-cp ./bin/* ./heart-disease-api/bin
-cp ./data_predict.py ./heart-disease-api
-cp ./app.py ./heart-disease-api
-cp ./Pipfile* ./heart-disease-api
+cp ./bin/* ./fn-ai-ml-heart-disease/predict
+cp ./data_predict.py ./fn-ai-ml-heart-disease
+cp ./app.py ./fn-ai-ml-heart-disease
+cp ./Pipfile* ./fn-ai-ml-heart-disease
 
 ```
 - Test the function locally
@@ -515,9 +515,15 @@ cp ./Pipfile* ./heart-disease-api
 
 - Deploy the code to Azure
 
+After running locally, we can deploy to Azure
+
 ```bash
-cd heart-disease-api
+cd fn-ai-ml-heart-disease
 func azure functionapp publish fn-ai-ml-heart-disease
 ```
+
+![Heart Disease Azure Function](./images/ozkary-ml-heart-disease-azure-function.png)
+
+
 
 We can now test the API using the data_test_api.ipynb file
