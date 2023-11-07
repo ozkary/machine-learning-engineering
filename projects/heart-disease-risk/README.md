@@ -184,9 +184,6 @@ race           0.001976
 - Random_state 42 to shuffle the data
 - Use strategy = y when there is a class imbalance in the dataset. It helps ensure that the class distribution in both the training and validation (or test) sets closely resembles the original dataset's class distribution
 
-
-#### Model Training
-
 #### Model Evaluation
 
 **Results:**
