@@ -1,6 +1,6 @@
 # Heart Disease Risk - Machine Learning (ML) Classification
 
-Could Machine Learning help find out, if I am at a risk of heart disease? Continue to read to learn how ML can help us.
+Could Machine Learning help us find out, if I am at a risk of heart disease? Continue to read to learn how ML can help us.
 
 ## Problem Statement:
 Heart disease is a leading cause of mortality worldwide, and its early identification and risk assessment are critical for effective prevention and intervention. With the help of electronic health records (EHR) and a wealth of health-related data, there is a significant opportunity to leverage machine learning techniques for predicting and assessing the risk of heart disease in individuals.
@@ -13,17 +13,19 @@ Key objectives of this research include:
 
 1. Developing a robust machine learning model capable of accurately predicting the risk of heart disease using CDC data.
 2. Identifying the most influential risk factors and parameters contributing to heart disease prediction.
-4. Compare model performance:
+3. Compare model performance:
    - Logistic Regression
    - Decision Tree
    - Random Forest
    - XGBoost Classification
-3. Evaluating the following metrics
+4. Evaluating the following metrics
    - Accuracy
    - Precision, 
    - F1 
    - Recall 
-4. Providing an API, so tools can integrate and make a risk analysis.
+5. Providing an API, so tools can integrate and make a risk analysis.
+   - Build a local app 
+   - Build an Azure function for cloud deployment
 
 The successful implementation of this research will lead to a transformative impact on public health by enabling timely preventive measures and tailored interventions for individuals at risk of heart disease.
 
@@ -53,6 +55,8 @@ In order to execute this project, we follow a series of steps for discovery and 
   - [Model Predict](./data_predict.py)
 - Web service app
   - [Web Service ](./app.py)
+- Azure Cloud Function
+  - [Cloud Function](./fn-ai-ml-heart-disease/)
 
 ## Data Analysis - Exploratory Data Analysis (EDA)
 
@@ -527,7 +531,8 @@ cd fn-ai-ml-heart-disease
 func azure functionapp publish fn-ai-ml-heart-disease
 ```
 
+- We can now test the API using the data_test_api.ipynb file
+
 ![Heart Disease Azure Function](./images/ozkary-ml-heart-disease-azure-function.png)
 
 
-We can now test the API using the data_test_api.ipynb file
