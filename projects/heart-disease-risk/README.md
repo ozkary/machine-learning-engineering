@@ -1,5 +1,7 @@
 # Heart Disease Risk - Machine Learning (ML) Classification
 
+Could Machine Learning help find out, if I am at a risk of heart disease? Continue to read to learn how ML can help us.
+
 ## Problem Statement:
 Heart disease is a leading cause of mortality worldwide, and its early identification and risk assessment are critical for effective prevention and intervention. With the help of electronic health records (EHR) and a wealth of health-related data, there is a significant opportunity to leverage machine learning techniques for predicting and assessing the risk of heart disease in individuals.
 
@@ -509,6 +511,12 @@ cp ./Pipfile* ./fn-ai-ml-heart-disease
 - Test the function locally
   - from the function project directory, start the function by typing `func start`
   - This should show an end-point which can be used to test locally
+    - Use the data_test_api.ipynb file for testing
+
+```bash
+cd fn-ai-ml-heart-disease
+func start
+```
 
 - Deploy the code to Azure
 
@@ -520,7 +528,6 @@ func azure functionapp publish fn-ai-ml-heart-disease
 ```
 
 ![Heart Disease Azure Function](./images/ozkary-ml-heart-disease-azure-function.png)
-
 
 
 We can now test the API using the data_test_api.ipynb file
