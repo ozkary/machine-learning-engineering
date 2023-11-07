@@ -452,23 +452,38 @@ Make sure to adjust the necessary details according to your specific Flask app a
   - Create the azure function
   - Get the storage connection string and configure the function
   
+> use the azure-deploy.sh
+> 
 ```bash 
-az group create -n dev-ai-ml-group -l EastUS2 
+resourceGroupName="dev-ai-ml-group"
+storageAccountName="devaimlstorage"
+functionAppName="fn-ai-ml-heart-disease"
+location="EastUS2"
 
-az storage account create -n devaimlstorage --resource-group dev-ai-ml-group -l EastUS2 --sku Standard_LRS
+# Create a resource group
+az group create --name $resourceGroupName --location $location
 
-az functionapp create -n fn-ai-ml-heart-disease --resource-group dev-ai-ml-group --consumption-plan-location EastUS2 --runtime python --runtime-version 3.8 --storage-account devaimlstorage --os-type Linux --functions-version 3
+# Create a storage account
+az storage account create --name $storageAccountName --resource-group $resourceGroupName --location $location --sku Standard_LRS
 
-connection_string=$(az storage account show-connection-string --name devaimlstorage --resource-group dev-ai-ml-group --output tsv)
+# Create a function app
+az functionapp create --name $functionAppName --resource-group $resourceGroupName --consumption-plan-location $location --runtime python --runtime-version 3.8 --storage-account $storageAccountName --os-type Linux --functions-version 3
 
-az functionapp config appsettings set --name fn-ai-ml-heart-disease --resource-group dev-ai-ml-group --settings AzureWebJobsStorage="$connection-string"
+# Retrieve the storage account connection string
+connectionString=$(az storage account show-connection-string --name $storageAccountName --resource-group $resourceGroupName --output tsv)
+
+# Configure the function app settings
+az functionapp config appsettings set --name $functionAppName --resource-group $resourceGroupName --settings AzureWebJobsStorage="$connectionString"
 ```
 
 - Build the function project
+  - Using pipenv shell install azure-function dependencies
   - Install the core tools and validate the verion
   - create the function
 
 ```bash
+pipenv install azure-functions
+
 npm install -g azure-functions-core-tools@3 --unsafe-perm true
 
 func --version
@@ -494,6 +509,9 @@ cp ./app.py ./heart-disease-api
 cp ./Pipfile* ./heart-disease-api
 
 ```
+- Test the function locally
+  - from the function project directory, start the function by typing `func start`
+  - This should show an end-point which can be used to test locally
 
 - Deploy the code to Azure
 
@@ -503,5 +521,3 @@ func azure functionapp publish fn-ai-ml-heart-disease
 ```
 
 We can now test the API using the data_test_api.ipynb file
-
-
