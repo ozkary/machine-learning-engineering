@@ -160,3 +160,6 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# ignore the images *.jpg in the 08-deep-learning folder and subfolders
+08-deep-learning/**/*.jpg
