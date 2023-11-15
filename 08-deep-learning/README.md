@@ -9,6 +9,8 @@ Deep learning is a subfield of machine learning that focuses on training artific
 
 Convolutional Neural Networks (CNNs) are a specialized class of deep neural networks designed for processing and analyzing grid-structured data, such as images and videos. CNNs are particularly powerful in computer vision tasks. They use convolutional layers to automatically and adaptively learn spatial hierarchies of features from input data. These networks employ filters or kernels to convolve across the input, capturing local patterns and gradually building complex representations. Pooling layers are often used to downsample the spatial dimensions, reducing computational complexity. CNNs have revolutionized image recognition, object detection, and various visual perception tasks.
 
+![Convolutional Neural Network (CNN)](./images/ozkary-convolutional-neural-network.png)
+
 ## Modeling
 
 Let's review the layers in the provided Convolutional Neural Network (CNN) and discuss the importance of each layer:
