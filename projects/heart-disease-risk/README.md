@@ -491,7 +491,7 @@ npm install -g azure-functions-core-tools@3 --unsafe-perm true
 
 func --version
 
-cd heart-disease-api
+cd fn-ai-ml-heart-disease
 
 func init fn-ai-ml-heart-disease --python
 
