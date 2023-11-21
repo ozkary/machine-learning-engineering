@@ -56,6 +56,10 @@ def build_model():
      - 32 filters: Number of learned filters.
      - (3, 3) kernel: Size of the convolutional filter.
      - 'relu' activation: Introduces non-linearity to the model.
+     - input_shape=(150, 150, 3): This parameter specifies the shape of the input data that will be fed into the model. In this case, it indicates that the input images should have a shape of (150, 150, 3), where:
+         - 150 is the height of the image,
+         - 150 is the width of the image, and
+         - 3 represents the number of color channels (red, green, and blue).
 
 **2. MaxPooling Layer:**
    - Importance: Reduces spatial dimensions, retaining the most important information. It helps in reducing computation and avoiding overfitting.
@@ -311,6 +315,5 @@ In summary, we should focus on both training and validation metrics to assess ou
 
 - A decreasing trend in loss over epochs indicates that the model is improving its predictions.
 - An increasing trend in accuracy over epochs indicates that the model is becoming more accurate in its classifications.
-- 
 
 Analyzing the median and standard deviation helps understand the central tendency and variability in the model's performance. It's essential to visualize these trends, along with other metrics, to make informed decisions about model training and potential adjustments in hyperparameters.

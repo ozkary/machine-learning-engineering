@@ -163,3 +163,5 @@ cython_debug/
 
 # ignore the images *.jpg in the 08-deep-learning folder and subfolders
 08-deep-learning/**/*.jpg
+*.h5git
+*.tflite
