@@ -155,7 +155,7 @@ Remember to consider the size of the TensorFlow Lite model and the inference lat
 
 ## Use the model to run inference on a new image
 
-![Wasp or Bee](https://habrastorage.org/webt/rt/d9/dh/rtd9dhsmhwrdezeldzoqgijdg8a.jpeg)
+![ozkary deep learning Wasp or Bee](https://habrastorage.org/webt/rt/d9/dh/rtd9dhsmhwrdezeldzoqgijdg8a.jpeg)
 
 ### Download and convert the image to TensorFlow Lite
 
@@ -350,5 +350,133 @@ output_data = interpreter.get_tensor(output_details[0]['index'])
 
 # print the output
 print('Tensor Output',round(output_data[0][0],3))
+
+```
+
+## Deployment
+
+### Create the Virtual Environment
+
+- Create the virtual environment
+- Install the dependencies
+
+From the working directory run the following commands:
+
+```bash
+pipenv shell
+pipenv install numpy pillow tflite_runtime
+
+```
+- Update the code to use tensorflow lite instead of Tensorflow
+
+```bash
+import tflite_runtime.interpreter as tflite
+```
+
+### Exporting the code from the notebook
+
+Using a cell in the notebook, run these commands:
+
+```bash
+# save the notebook to a python file 
+!jupyter nbconvert --to script homework.ipynb
+
+# rename the homework.py file to bees-wasps.py
+!mv homework.py bees-wasps.py
+```
+
+### Create a Docker Container
+
+By adding our code into a Docker container, we can run containerized serverless functions on the cloud. 
+
+This Dockerfile is designed to build a Docker image for a Python application. Here's a breakdown of the different instructions in the file:
+
+1. **Base Image:**
+   ```Dockerfile
+   FROM agrigorev/zoomcamp-bees-wasps:v2
+   ```
+   This line specifies the base image for your Docker container. In this case, it uses the image `agrigorev/zoomcamp-bees-wasps:v2`. This image likely contains the necessary dependencies and environment for running a Python application, possibly related to the Zoomcamp course.
+
+2. **Working Directory:**
+   ```Dockerfile
+   WORKDIR .
+   ```
+   This sets the working directory to the current directory (`.`) inside the container. This means that subsequent commands will be executed relative to this directory.
+
+3. **Copy Files:**
+   ```Dockerfile
+   COPY main.py .
+   COPY img_ai ./img_ai/
+   ```
+   These lines copy the `main.py` file and the `img_ai` directory from the local machine into the current working directory of the container. This assumes that `main.py` is at the root of your project, and `img_ai` is a directory containing some Python package or module.
+
+4. **Install Dependencies:**
+   ```Dockerfile
+   RUN pip install numpy
+   RUN pip install Pillow
+   RUN pip install https://github.com/alexeygrigorev/tflite-aws-lambda/raw/main/tflite/tflite_runtime-2.14.0-cp310-cp310-linux_x86_64.whl
+   ```
+   These lines install Python dependencies using the `pip` package manager. It installs `numpy`, `Pillow`, and a specific version of the TensorFlow Lite runtime (`tflite_runtime`) from a custom wheel file hosted on GitHub.
+
+5. **Command to Run the Application:**
+   ```Dockerfile
+   CMD ["main.main"]
+   ```
+   This line specifies the default command to run when the container starts. It runs the `main.main` Python script. The assumption here is that `main.py` contains a `main` module with an entry point function or code.
+
+Overall, this Dockerfile sets up a Python environment in the container, installs necessary dependencies, and configures the container to run the `main.main` script when it starts. Make sure that the paths and dependencies match the structure and requirements of your actual Python project.
+
+Putting all the code together, Dockerfile should look as follows:
+
+```python
+# Use the base image
+FROM agrigorev/zoomcamp-bees-wasps:v2
+
+#define a working directory
+WORKDIR .
+
+COPY main.py .
+COPY img_ai ./img_ai/
+
+# Copy the Pipenv files to the container
+COPY Pipfile Pipfile.lock ./
+
+RUN pip install numpy
+RUN pip install Pillow
+RUN pip install https://github.com/alexeygrigorev/tflite-aws-lambda/raw/main/tflite/tflite_runtime-2.14.0-cp310-cp310-linux_x86_64.whl
+
+
+# use as the entry point that should be called by the serverless functions
+CMD ["main.main"]
+
+```
+
+
+- Build the Image
+
+```python
+docker build -t ozkary/bees-wasps:v1 .
+```
+
+- Run the container
+
+```python
+ docker run -p 8080:8080 -it ozkary/bees-wasps:v1
+```
+
+- Test the function from the container
+
+```python
+import requests
+import json
+
+# call the docker url with the image url localhost:8080
+
+url = 'http://localhost:8080/2015-03-31/functions/function/invocations'
+img_url = 'https://habrastorage.org/webt/rt/d9/dh/rtd9dhsmhwrdezeldzoqgijdg8a.jpeg'
+
+# call the docker url with the image url
+response = requests.post(url, data=json.dumps({'url': img_url})).json()
+print('docker container result',response)
 
 ```
