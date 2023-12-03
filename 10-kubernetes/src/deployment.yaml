@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: credit
+spec:
+  selector:
+    matchLabels:
+      app: credit
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: credit
+    spec:
+      containers:
+      - name: credit
+        image: zoomcamp-model:hw10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"  # Adjust based on your application's requirements
+            cpu: "200m"     # Adjust based on your application's requirements
+        ports:
+        - containerPort: 9696
