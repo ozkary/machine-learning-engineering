@@ -40,7 +40,7 @@ In order to execute this project, we follow a series of steps for discovery and 
 - Process and convert the data for modeling, feature analysis
   - [Step 2 - Data Processing](./data_processing.ipynb)
 - Train the model using different algorithm to evaluate the best option
-  - [Step 3 - Model Processing](./data_train.ipynb)
+  - [Step 3 - Model Training](./data_train.ipynb)
 - Run test cases and predict results
   - [Step 4 - Model Prediction](./data_predict.ipynb)
 - Call the Web Service
