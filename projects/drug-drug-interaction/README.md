@@ -122,7 +122,11 @@ The data shows that the target variable is a categorical feature already in nume
 
 ![DDI Bar Chart Totals](./images/ozkary-interaction-type-distribution.png)
 
+There are multiple target categories. There is a class imbalance as shown below:
+
 ![DDI Class Balance Distribution](./images/ozkary-interaction-type-class-balance.png)
+
+> DDI Categories 49, 47 and 73 make up 62% of the cases.
 
 ### Feature Importance
 
@@ -147,6 +151,9 @@ Consequently, for our model evaluation, we have decided to exclusively utilize t
 - Split the data
   - train/validation/test split with 60%/20%/20% distribution.
   - Random_state 42
+- Encode the data
+  - Encode the categorical and numerical feature using DictVectorizer
+  - Encode the target variable to make it numerical continuous from 0-n
 - Train the model
   - LogisticRegression
   - RandomForestClassifier
@@ -157,16 +164,15 @@ Consequently, for our model evaluation, we have decided to exclusively utilize t
   - precision_score
   - recall_score
   - f1_score
-- Confusion Matrix
 
 ### Data Split
 
-- Use a 60/20/20 distribution fir train/val/test
+- Use a 60/20/20 distribution for train/val/test
 - Random_state 42 to shuffle the data
 
-#### Model Evaluation
+### Model Evaluation
 
-Use these models with the following hyperparameters:
+Use these models with the following hyper-parameters:
 
 ```python
 random_state=42
@@ -175,3 +181,63 @@ random_state=42
 'xgboost': XGBClassifier(n_estimators=100, max_depth=5, random_state=42, n_jobs=-1),                
 'decision_tree': DecisionTreeClassifier(max_depth=5, random_state=random_state)
 ```
+
+**Results:**
+```python
+       model          accuracy  precision    recall     f1
+logistic_regression   0.314556   0.003701  0.011763  0.005630
+random_forest         0.314608   0.003701  0.011765  0.005631
+xgboost               0.315390   0.008824  0.012044  0.006608
+decision_tree         0.315234   0.011737  0.011852  0.005911
+```
+
+**Analysis:**
+
+1. **Logistic Regression Model:**
+   - **Accuracy:** 31.46%
+   - **Precision:** 0.37%
+   - **Recall:** 1.18%
+   - **F1 Score:** 0.56%
+
+2. **Random Forest Model:**
+   - **Accuracy:** 31.46%
+   - **Precision:** 0.37%
+   - **Recall:** 1.18%
+   - **F1 Score:** 0.56%
+
+3. **XGBoost Model:**
+   - **Accuracy:** 31.54%
+   - **Precision:** 0.88%
+   - **Recall:** 1.20%
+   - **F1 Score:** 0.66%
+
+4. **Decision Tree Model:**
+   - **Accuracy:** 31.52%
+   - **Precision:** 1.17%
+   - **Recall:** 1.19%
+   - **F1 Score:** 0.59%
+
+**Conclusions:**
+
+The models exhibit similar performance, with accuracy around 31.5%. However, the precision, recall, and F1 scores are consistently low across all models. This indicates that the models struggle to make accurate positive predictions and may not effectively capture positive instances. Further investigation, including potential data imbalances and feature relevance, is recommended. Model tuning and additional feature engineering might be necessary to enhance performance.
+
+#### Model Evaluation with Hyperparameter Adjustments
+
+To improve the model performance, we make the following hyperpameter changes:
+
+```python
+# fine0tune the model hyperparameters
+model_factory.train(X_train_std, y_train_encoded, reset=True, reg=1, estimators=500, iter=1000, depth=7)
+```
+
+**Results:**
+```python
+  model	             accuracy	precision	recall	    f1
+logistic_regression	0.314556	0.003701	0.011763	0.005630
+random_forest	      0.314608	0.003701	0.011765	0.005631
+xgboost	            0.314817	0.008922	0.012130	0.006935
+decision_tree	      0.314947	0.025855	0.011936	0.006108
+```
+The hyperparameter changes did not result in a significant improvement. Next, we will evaluate a neural network to explore further enhancements.
+
+### Neural Network Evaluation
