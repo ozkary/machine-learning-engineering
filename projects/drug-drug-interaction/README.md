@@ -16,12 +16,13 @@ Additionally, we utilize dimensionality reduction techniques, specifically Princ
 
 **Key objectives of this research include:**
 
-1. Developing a robust machine learning model capable of accurately predicting drug-drug interaction.
+1. Developing a robust machine learning model capable of accurately predicting drug-drug interaction. which is a multi-class study.
 2. Identifying the most influential risk factors and parameters contributing to these interactions.
 3. Evaluate several models and compare their performance:
    - Logistic Regression   
    - Random Forest
    - XGBoost Classification
+   - Decision Tree
    - Neural Network
 4. Evaluate these models metrics
    - Accuracy
@@ -31,6 +32,8 @@ Additionally, we utilize dimensionality reduction techniques, specifically Princ
 5. Providing an API, so tools can integrate and make a risk analysis.
    - Build a local app 
    - Build an Azure function for cloud deployment
+
+> Since there are multiple possible drug-drug interactions, this is a multi-class target study
 
 The successful implementation of this study has the potential to aid healthcare practices. By unraveling intricate patterns and predicting DDIs with accuracy, this research could pave the way for a transformative impact on public health. The outcomes may empower healthcare professionals to implement timely preventive measures and personalized interventions for individuals susceptible to adverse effects arising from drug interactions.
 
@@ -97,7 +100,7 @@ These are the steps to analysis the data:
 Based on the dataset, we have a mix of categorical and numerical features. We consider the following for processing:
 
 1. **Target Variable:**
-   - The target variable is categorical and has 86 possible types.
+   - The target variable is categorical and has 86 possible types (multi-class).
    - Each type likely represents a specific category or class related to drug interactions.
 
 2. **Features:**
@@ -132,3 +135,43 @@ Upon evaluating the molecular similarities of drugs, we identified a robust asso
 `Feature Importance for SSP: [1.]`
 
 Consequently, for our model evaluation, we have decided to exclusively utilize the SSP feature.
+
+
+## Machine Learning Training and Model Selection
+
+- Load the ./data/ssp_interaction_type.csv.gz
+- Process the features
+  - Set the categorical features names
+  - Set the numeric features names  
+  - Set the target variable
+- Split the data
+  - train/validation/test split with 60%/20%/20% distribution.
+  - Random_state 42
+- Train the model
+  - LogisticRegression
+  - RandomForestClassifier
+  - XGBClassifier
+  - DecisionTreeClassifier
+- Evaluate the models and compare them
+  - accuracy_score
+  - precision_score
+  - recall_score
+  - f1_score
+- Confusion Matrix
+
+### Data Split
+
+- Use a 60/20/20 distribution fir train/val/test
+- Random_state 42 to shuffle the data
+
+#### Model Evaluation
+
+Use these models with the following hyperparameters:
+
+```python
+random_state=42
+'logistic_regression': LogisticRegression(C=10, max_iter=1000, random_state=random_state, n_jobs=-1),
+'random_forest': RandomForestClassifier(n_estimators=100, max_depth=5, random_state=random_state, n_jobs=-1),
+'xgboost': XGBClassifier(n_estimators=100, max_depth=5, random_state=42, n_jobs=-1),                
+'decision_tree': DecisionTreeClassifier(max_depth=5, random_state=random_state)
+```
