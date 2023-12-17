@@ -4,3 +4,8 @@ cnn.py
 ml.py
 *.csv.gz
 discovery.ipynb
+
+# allow interaction_types.csv to be pushed
+!interaction_types.csv
+!drugbank_slim_df.csv
+!test_cases.csv
