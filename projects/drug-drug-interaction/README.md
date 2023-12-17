@@ -342,3 +342,5 @@ Model 3 consistently outperforms the other models across all metrics, exhibiting
 
 ## Model Predictions
 
+We are using the XGBoost model for our predictions.
+

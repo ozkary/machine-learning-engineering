@@ -1,4 +1,4 @@
-Prescription,Drug name,	Smiles
+Prescription,Drug name,Smiles
 839,Ritonavir,CC(C)[C@H](NC(=O)N(C)CC1=CSC(=N1)C(C)C)C(=O)N[C@H](C[C@H](O)[C@H](CC1=CC=CC=C1)NC(=O)OCC1=CN=CS1)CC1=CC=CC=C1
 839,Formoterol,COC1=CC=C(CC(C)NCC(O)C2=CC(NC=O)=C(O)C=C2)C=C1
 1781,Ritonavir,CC(C)[C@H](NC(=O)N(C)CC1=CSC(=N1)C(C)C)C(=O)N[C@H](C[C@H](O)[C@H](CC1=CC=CC=C1)NC(=O)OCC1=CN=CS1)CC1=CC=CC=C1
