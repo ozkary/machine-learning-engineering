@@ -45,6 +45,7 @@ class DDIModelLoader():
         y_pred = self.model.predict(X)
         return y_pred
 
+
 class DDIPredictor:
     """
     Maps the predictions to the original labels and meaning
@@ -151,6 +152,7 @@ class DDIPredictor:
         except:
             return 0
         
+
 def load_test_cases():
     """ 
     Load the test cases from the csv file
@@ -175,20 +177,19 @@ def load_test_cases():
    
     return prescriptions    
 
-
-# add a main function for the entry point to the program
-if __name__ == '__main__':
-    os.system('clear')
-    print('Running DDI main function')
-
-    # run risk test cases with the model
+def predict(data):
+    """ 
+    Predict the DDI for the given data
+    """
+    
+    # load the model
     model_file = './models/ozkary_ddi_xgboost.pkl.bin'
     encoder_file = './models/ozkary_ddi_encoder.pkl.bin'
     data_path = './data/'
 
     predictor = DDIPredictor(model_file, encoder_file, data_path)
 
-    prescriptions = load_test_cases()
+    prescriptions = data
 
     # for each drug pair calculate the structural similarity profile
     for rx in prescriptions:        
@@ -215,15 +216,15 @@ if __name__ == '__main__':
 
     # load the interactions types file
     result = predictor.get_ddi_description(prescriptions.values())
+    
+    return result
+
+
+# add a main function for the entry point to the program
+if __name__ == '__main__':
+    os.system('clear')
+    print('Running DDI main function')
+
+    prescriptions = load_test_cases()
+    result = predict(prescriptions)
     print(result)
-
-
-# In[249]:
-
-
-# save the notebook to code
-get_ipython().system('jupyter nbconvert --to script data_predict.ipynb')
-
-# move to the ddi_lib folder
-get_ipython().system('mv data_predict.py ./ddi_lib/')
-

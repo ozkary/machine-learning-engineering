@@ -340,7 +340,7 @@ This is a breakdown analysis for each model:
 
 Model 3 consistently outperforms the other models across all metrics, exhibiting the highest accuracy and validation accuracy while having the lowest loss and loss accuracy. Therefore, Model 3 is recommended for further testing and prediction tasks.
 
-## Model Predictions
+## Model Predictions - Test Cases
 
 We are using the XGBoost model for our predictions.
 
