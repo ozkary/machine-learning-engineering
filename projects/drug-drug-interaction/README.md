@@ -18,12 +18,11 @@ Additionally, we utilize dimensionality reduction techniques, specifically Princ
 
 1. Developing a robust machine learning model capable of accurately predicting drug-drug interaction. which is a multi-class study.
 2. Identifying the most influential risk factors and parameters contributing to these interactions.
-3. Evaluate several models and compare their performance:
-   - Logistic Regression   
+3. Evaluate several models and compare their performance:   
    - Random Forest
    - XGBoost Classification
    - Decision Tree
-   - Neural Network
+   - Multi-Layer Perceptron Neural Network (MLP)
 4. Evaluate these models metrics
    - Accuracy
    - Precision, 
@@ -126,7 +125,7 @@ There are multiple target categories. There is a class imbalance as shown below:
 
 ![DDI Class Balance Distribution](./images/ozkary-interaction-type-class-balance.png)
 
-> DDI Categories 49, 47 and 73 make up 62% of the cases.
+> DDI Categories 49, 47 and 73 make up 62% of the DDI cases.
 
 ### Feature Importance
 
@@ -136,10 +135,9 @@ After evaluating the significance of the pc_n features, we observed a low associ
 
 Upon evaluating the molecular similarities of drugs, we identified a robust association, as indicated by the feature importance:
 
-`Feature Importance for SSP: [1.]`
+`Feature Importance for SSP: [1]`
 
-Consequently, for our model evaluation, we have decided to exclusively utilize the SSP feature.
-
+Consequently, for our model evaluation, we have decided to utilize the SSP feature.
 
 ## Machine Learning Training and Model Selection
 
@@ -159,11 +157,14 @@ Consequently, for our model evaluation, we have decided to exclusively utilize t
   - RandomForestClassifier
   - XGBClassifier
   - DecisionTreeClassifier
+- Fine tune hyperparameters
 - Evaluate the models and compare them
   - accuracy_score
   - precision_score
   - recall_score
   - f1_score
+- Export the code to ddi_lib
+  - data_train.py
 
 ### Data Split
 
@@ -176,68 +177,168 @@ Use these models with the following hyper-parameters:
 
 ```python
 random_state=42
-'logistic_regression': LogisticRegression(C=10, max_iter=1000, random_state=random_state, n_jobs=-1),
 'random_forest': RandomForestClassifier(n_estimators=100, max_depth=5, random_state=random_state, n_jobs=-1),
 'xgboost': XGBClassifier(n_estimators=100, max_depth=5, random_state=42, n_jobs=-1),                
 'decision_tree': DecisionTreeClassifier(max_depth=5, random_state=random_state)
 ```
 
-**Results:**
-```python
-       model          accuracy  precision    recall     f1
-logistic_regression   0.314556   0.003701  0.011763  0.005630
-random_forest         0.314608   0.003701  0.011765  0.005631
-xgboost               0.315390   0.008824  0.012044  0.006608
-decision_tree         0.315234   0.011737  0.011852  0.005911
-```
+#### Results:
 
-**Analysis:**
+After training the models with the same data, we evaluate each one of them with the following results:
 
-1. **Logistic Regression Model:**
-   - **Accuracy:** 31.46%
-   - **Precision:** 0.37%
-   - **Recall:** 1.18%
-   - **F1 Score:** 0.56%
+|   Model         | Accuracy | Precision | Recall | F1      |
+|------------------|----------|-----------|--------|---------|
+| Random Forest    | 0.436474 | 0.031082  | 0.02932| 0.025582|
+| XGBoost          | 0.883765 | 0.843175  | 0.768203| 0.794142|
+| Decision Tree    | 0.421381 | 0.070120  | 0.046643| 0.046055|
 
-2. **Random Forest Model:**
-   - **Accuracy:** 31.46%
-   - **Precision:** 0.37%
-   - **Recall:** 1.18%
-   - **F1 Score:** 0.56%
 
-3. **XGBoost Model:**
-   - **Accuracy:** 31.54%
-   - **Precision:** 0.88%
-   - **Recall:** 1.20%
-   - **F1 Score:** 0.66%
+#### Analysis:
 
-4. **Decision Tree Model:**
-   - **Accuracy:** 31.52%
-   - **Precision:** 1.17%
-   - **Recall:** 1.19%
-   - **F1 Score:** 0.59%
+Let's break down the analysis for each model and metrics:
 
-**Conclusions:**
+#### Random Forest
+- **Accuracy:** 43.65%
+- **Precision:** 3.11%
+- **Recall:** 2.93%
+- **F1 Score:** 2.56%
 
-The models exhibit similar performance, with accuracy around 31.5%. However, the precision, recall, and F1 scores are consistently low across all models. This indicates that the models struggle to make accurate positive predictions and may not effectively capture positive instances. Further investigation, including potential data imbalances and feature relevance, is recommended. Model tuning and additional feature engineering might be necessary to enhance performance.
+#### XGBoost
+- **Accuracy:** 88.38%
+- **Precision:** 84.32%
+- **Recall:** 76.82%
+- **F1 Score:** 79.41%
+
+#### Decision Tree
+- **Accuracy:** 42.14%
+- **Precision:** 7.01%
+- **Recall:** 4.66%
+- **F1 Score:** 4.61%
+
+#### Observations
+
+- XGBoost outperforms both Random Forest and Decision Tree in all metrics, showing significantly higher accuracy, precision, recall, and F1 score.
+- Random Forest and Decision Tree models exhibit relatively lower performance compared to XGBoost, especially in terms of precision, recall, and F1 score.
+- The choice of the appropriate model is crucial, and in this case, XGBoost seems to be the most suitable for the given classification task.
+
+Further investigation, including potential data imbalances and feature relevance, is recommended. Model tuning and additional feature engineering might be necessary to enhance performance.
 
 #### Model Evaluation with Hyperparameter Adjustments
 
-To improve the model performance, we make the following hyperpameter changes:
+To improve the model performance, we make the following hyperparameter changes:
 
 ```python
-# fine0tune the model hyperparameters
-model_factory.train(X_train_std, y_train_encoded, reset=True, reg=1, estimators=500, iter=1000, depth=7)
+# fine tune the model hyperparameters
+model_factory.train(X_train_std, y_train_encoded, reset=True, estimators=150, depth=7)
 ```
 
 **Results:**
-```python
-  model	             accuracy	precision	recall	    f1
-logistic_regression	0.314556	0.003701	0.011763	0.005630
-random_forest	      0.314608	0.003701	0.011765	0.005631
-xgboost	            0.314817	0.008922	0.012130	0.006935
-decision_tree	      0.314947	0.025855	0.011936	0.006108
-```
-The hyperparameter changes did not result in a significant improvement. Next, we will evaluate a neural network to explore further enhancements.
 
-### Neural Network Evaluation
+|   Model         | Accuracy | Precision | Recall  | F1      |
+|------------------|----------|-----------|---------|---------|
+| Random Forest    | 0.440697 | 0.031069  | 0.029685| 0.025856|
+| XGBoost          | 0.914968 | 0.872246  | 0.777030| 0.808129|
+| Decision Tree    | 0.483916 | 0.143749  | 0.075598| 0.077136|
+
+The hyperparameter changes did not result in a significant improvement for the random_forest and decision_tree models, but it did improve the xgboost model. 
+
+![DDI Model Evaluation](./images/ozkary-ml-ddi-model-evaluation.png)
+
+### Conclusion: Model Evaluation
+
+After evaluating the performance of different models on our dataset, it is evident that XGBoost outperforms both Random Forest and Decision Tree models across various metrics. The high accuracy (91.5%) and robustness in precision, recall, and F1 score make XGBoost the preferred choice for predicting drug-drug interactions in our analysis.
+
+Next, we will evaluate a neural network to explore further enhancements.
+
+## Neural Network Evaluation
+
+In the context of drug interaction prediction task for DDI analysis, a simple feed forward neural network (also known as a dense or multi-layer perceptron network MLP) is suitable. We can use dense layers (Dense in Keras) to connect each neuron in one layer to each neuron in the next layer. 
+
+For this analysis, we will evaluate three different networks. Starting from a simple architecture and improving it by adding more layers.
+
+- Load the ./data/ssp_interaction_type.csv.gz
+- Process the features
+  - Set the categorical features names
+  - Set the numeric features names  
+  - Set the target variable
+- Split the data
+  - train/validation/test split with 60%/20%/20% distribution.
+  - Random_state 42
+- Encode the data
+  - Encode the categorical and numerical feature using DictVectorizer
+  - Encode the target variable to make it numerical continuous from 0-n
+- Train the MLP models (12 epochs)
+  - Model 1
+  - Model 2
+  - Model 3  
+- Evaluate the models and compare them
+  - accuracy_score
+  - precision_score
+  - recall_score
+  - f1_score
+- Confusion Matrix
+- Export the code to ddi_lib
+  - data_train_mlp.py
+
+### Data Split
+
+- Use a 60/20/20 distribution for train/val/test
+- Random_state 42 to shuffle the data
+
+### Model Architecture
+
+The following model architectures are evaluated for this study:
+
+#### MLP Model 1
+![MLP Model 1](./images/ozkary-mlp-neural-network1.png)
+
+#### MLP Model 2
+![MLP Model 1](./images/ozkary-mlp-neural-network2.png)
+
+#### MLP Model 3
+![MLP Model 3](./images/ozkary-mlp-neural-network3.png)
+
+### Model Evaluation
+
+| Model   | Accuracy | Validation Accuracy | Loss  | Loss Accuracy |
+|---------|----------|----------------------|-------|---------------|
+| Model 1 | 0.6637   | 0.7206               | 1.0069| 0.8541        |
+| Model 2 | 0.7191   | 0.7893               | 0.8481| 0.6391        |
+| Model 3 | 0.8768   | 0.8581               | 0.3896| 0.4623        |
+
+![MLP Model 3 Accuracy](./images/ozkary-mlp-model3_accuracy.png)
+
+![MLP Model 3 Loss](./images/ozkary-mlp-model3_loss.png)
+
+This is a breakdown analysis for each model:
+
+**Model 1:**
+- **Accuracy:** 66.37%
+- **Validation Accuracy:** 72.06%
+- **Loss:** 1.0069
+- **Loss Accuracy:** 85.41%
+
+**Model 2:**
+- **Accuracy:** 71.91%
+- **Validation Accuracy:** 78.93%
+- **Loss:** 0.8481
+- **Loss Accuracy:** 63.91%
+
+**Model 3:**
+- **Accuracy:** 87.68%
+- **Validation Accuracy:** 85.81%
+- **Loss:** 0.3896
+- **Loss Accuracy:** 46.23%
+
+**Analysis:**
+- Model 3 outperforms the other models in terms of both accuracy and validation accuracy.
+- Model 2 shows significant improvement compared to Model 1, with higher accuracy and lower loss.
+- Model 3 has the lowest loss value, indicating better convergence during training.
+- Validation accuracy is close to the training accuracy for all models, suggesting reasonable generalization.
+
+**Conclusion:**
+
+Model 3 consistently outperforms the other models across all metrics, exhibiting the highest accuracy and validation accuracy while having the lowest loss and loss accuracy. Therefore, Model 3 is recommended for further testing and prediction tasks.
+
+## Model Predictions
+
