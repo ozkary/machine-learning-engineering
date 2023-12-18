@@ -4,6 +4,8 @@ Can Machine Learning Unlock the Secrets of Drug-Drug Interactions (DDI)?
 
 Could Machine Learning (ML) be the key to unraveling and predicting these interactions? Join us on a journey to explore the abundance of medical drug information and investigate the feasibility of constructing predictive AI models that could revolutionize our ability to identify and anticipate drug-to-drug interactions.
 
+![ozkary predicting drug-drug interactions with AI](./images/ozkary-predicting-drug-drug-interactions-with-ai.jpg)
+
 ## Problem Statement:
 
 Drug-drug interactions (pharmacodynamics) occur when the chemical ingredients of different medications interact, potentially leading to various medical complications for patients. In the United States, the impact of these interactions is alarming, contributing to numerous health complications and even fatalities.
