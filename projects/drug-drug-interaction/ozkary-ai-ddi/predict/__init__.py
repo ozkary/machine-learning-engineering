@@ -1,24 +1,23 @@
 import logging
-
+import os
 import azure.functions as func
-
+import sklearn
+import json
+from .ddi_lib import predict
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    logging.info('Predict HTTP trigger function processed a request.')
 
-    name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
+    try:
+        data = req.get_json()
+        if data:
+            path = os.path.abspath(os.path.dirname(__file__))                      
+            # Make predictions
+            predictions = predict(json.loads(data), path)
+
+            # Return the predictions as a JSON response
+            return func.HttpResponse(json.dumps(predictions), mimetype="application/json")
         else:
-            name = req_body.get('name')
-
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
-    else:
-        return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
-        )
+            return func.HttpResponse("Invalid input data.", status_code=400)
+    except Exception as e:
+        return func.HttpResponse(f"An error occurred: {str(e)}", status_code=500)

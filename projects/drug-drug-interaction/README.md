@@ -398,6 +398,16 @@ This command starts Gunicorn and binds it to address 0.0.0.0 (meaning all availa
 
 > Test the local API using [Local Web Service] (./data_test_api.ipynb)
 
+The output should look similar to this. This describes the interactions between drugs
+
+```bash
+Payload: {"839": {"drug1": "Ritonavir", "smiles1": "CC(C)[C@H...
+Result: Ritonavir may increase the antipsychotic activitie...
+Result: Ritonavir may increase the antipsychotic activitie...
+Result: Phentermine may increase the antipsychotic activitie...
+Result: Mirtazapine may increase the antipsychotic activitie..
+```
+
 ### Docker Container
 
 We are using a Docker container to host the application and its dependencies.
@@ -547,3 +557,48 @@ func new --name predict --template "HTTP trigger"
 ```bash
 bash serverless_build.sh
 ```
+
+ #### Test the serverless function locally
+- from the function project directory, start the function by typing `func start`
+- This should show an end-point which can be used to test locally
+  - Use the data_test_api.ipynb file for testing
+
+```bash
+cd fn-ai-ml-heart-disease
+func start
+```
+
+The output should show:
+```bash
+Azure Functions Core Tools
+Core Tools Version:       3.0.5373 Commit hash: N/A  (64-bit)
+Function Runtime Version: 3.20.1.0
+Functions:
+
+        predict: [POST] http://localhost:7071/api/
+```
+> We can now switch to the data_test_api notebook and test the local serverless function.
+
+#### Deploy the code to Azure
+
+After running locally, we can deploy to Azure.
+
+> Make sure your azure CLI is authenticated with your credentials
+
+```bash
+cd ozkary-ad-ddi
+func azure functionapp publish ozkary-ai-ddi
+```
+
+This should be the build output
+
+```bash
+Remote build succeeded!
+Syncing triggers...
+Functions in ozkary-ai-ddi:
+    predict - [httpTrigger]
+        Invoke url: https://ozkary-ai-ddi.azurewebsites.net/api/predict
+
+```
+
+- We can now test the API using the data_test_api.ipynb file

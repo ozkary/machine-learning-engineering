@@ -523,6 +523,18 @@ cd fn-ai-ml-heart-disease
 func start
 ```
 
+The output should show:
+```bash
+Azure Functions Core Tools
+Core Tools Version:       3.0.5373 Commit hash: N/A  (64-bit)
+Function Runtime Version: 3.20.1.0
+Functions:
+
+        predict: [POST] http://localhost:7071/api/
+```
+
+> We can now switch to the data_test_api notebook and test the local serverless function.
+
 - Deploy the code to Azure
 
 After running locally, we can deploy to Azure
