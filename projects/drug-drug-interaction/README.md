@@ -564,7 +564,7 @@ bash serverless_build.sh
   - Use the data_test_api.ipynb file for testing
 
 ```bash
-cd fn-ai-ml-heart-disease
+cd ozkary-ai-ddi
 func start
 ```
 
@@ -586,7 +586,8 @@ After running locally, we can deploy to Azure.
 > Make sure your azure CLI is authenticated with your credentials
 
 ```bash
-cd ozkary-ad-ddi
+cd ozkary-ai-ddi
+pipenv requirements > requirements.txt
 func azure functionapp publish ozkary-ai-ddi
 ```
 
