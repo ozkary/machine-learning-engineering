@@ -470,7 +470,11 @@ docker rmi ozkary_ddi_api:latest
 
 Follow these steps to create an Azure Cloud serverless API
 
-**Install Azure CLI:** If you haven't already, install the Azure CLI on your machine. We can download it from the official website. 
+**Install Azure CLI:** 
+
+- If you haven't already, install the Azure CLI on your machine. 
+  - We can download it from the official website. 
+- Make sure to authenticate with the CLI. 
 
 #### Create an Azure function app
 
@@ -480,8 +484,13 @@ Follow these steps to create an Azure Cloud serverless API
   - Create the azure function
   - Get the storage connection string and configure the function
   
-> use the azure-deploy.sh
+> use the file azure-deploy.sh 
 
+```bash
+bash azure-deploy.sh 
+```
+-  Or manually run the following commands
+  
 ```bash 
 resourceGroupName="dev-ai-ml-group"
 storageAccountName="devaimlstorage"
@@ -502,4 +511,39 @@ connectionString=$(az storage account show-connection-string --name $storageAcco
 
 # Configure the function app settings
 az functionapp config appsettings set --name $functionAppName --resource-group $resourceGroupName --settings AzureWebJobsStorage="$connectionString"
+```
+#### Build the serverless function project
+
+- Using pipenv shell install azure-function dependencies
+  - Install the core tools and validate the version
+  - create the function project
+
+```bash
+pipenv install azure-functions
+
+npm install -g azure-functions-core-tools@3 --unsafe-perm true
+
+func --version
+
+cd ozkary-ai-ddi
+
+func init ozkary-ai-ddi --python
+
+func new --name predict --template "HTTP trigger"
+
+# select the python option
+
+```
+
+#### Import the code
+
+- Import the app.py code into the function __init__.py
+- Copy code into the function folder
+  - Copy /models/* in the root of the function project
+  - Copy data files
+  - Copy code files
+  - Copy pipfiles
+
+```bash
+bash serverless_build.sh
 ```

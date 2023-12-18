@@ -13,6 +13,7 @@ numpy = "*"
 matplotlib = "*"
 seaborn = "*"
 xgboost = "*"
+azure-functions = "*"
 
 [dev-packages]
 

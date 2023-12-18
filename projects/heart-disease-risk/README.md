@@ -432,7 +432,8 @@ CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000", "--workers", "4"]
 docker build -t heart_disease_app .
 ```
 
-4. Once the image is built, we can run the Docker container using:
+- Once the image is built, we can run the Docker container using:
+- Shutdown the local API
 
 ```bash
 docker run -p 8000:8000 heart_disease_app
@@ -455,7 +456,7 @@ Make sure to adjust the necessary details according to your specific Flask app a
   - Get the storage connection string and configure the function
   
 > use the azure-deploy.sh
-> 
+
 ```bash 
 resourceGroupName="dev-ai-ml-group"
 storageAccountName="devaimlstorage"
@@ -478,10 +479,10 @@ connectionString=$(az storage account show-connection-string --name $storageAcco
 az functionapp config appsettings set --name $functionAppName --resource-group $resourceGroupName --settings AzureWebJobsStorage="$connectionString"
 ```
 
-- Build the function project
+#### Build the serverless function project
   - Using pipenv shell install azure-function dependencies
-  - Install the core tools and validate the verion
-  - create the function
+  - Install the core tools and validate the version
+  - create the function project
 
 ```bash
 pipenv install azure-functions
@@ -496,6 +497,7 @@ func init fn-ai-ml-heart-disease --python
 
 func new --name predict --template "HTTP trigger"
 
+# select the python option
 
 ```
 - Import the app.py code into the function __init__.py
