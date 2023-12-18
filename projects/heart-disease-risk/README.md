@@ -81,8 +81,8 @@ These are the steps to analysis the data:
 Based on the dataset, we have a mix of categorical and numerical features. We consider the following for encoding:
 
 1. **Categorical Features:**
-   - 'heartdisease': This is your target variable, and you mentioned that you want to predict a rank instead of binary outcomes. You can leave this as is since it represents the outcome.
-   - 'smoking', 'alcoholdrinking', 'stroke', 'sex', 'agecategory', 'race', 'diabetic', 'physicalactivity', 'genhealth', 'sleeptime', 'asthma', 'kidneydisease', 'skincancer': These are categorical features. You can consider one-hot encoding these features.
+   - 'heartdisease': This is the target variable.
+   - 'smoking', 'alcoholdrinking', 'stroke', 'sex', 'agecategory', 'race', 'diabetic', 'physicalactivity', 'genhealth', 'sleeptime', 'asthma', 'kidneydisease', 'skincancer': These are categorical features. We can consider one-hot encoding these features.
    
 2. **Numerical Features:**
    - 'bmi', 'physicalhealth', 'mentalhealth', 'diffwalking': These are already numerical features, so there's no need to encode them.
@@ -139,13 +139,13 @@ Overall Rate 0.09035
 
 1. `Overall Rate`: This is the overall rate of heart disease occurrence in the  dataset. It represents the proportion of individuals with heart disease (target='Yes') in the  dataset. For example, if the overall rate is 0.2, it means that 20% of the individuals in the  dataset have heart disease.
 
-2. `Difference`: This value represents the difference between the percentage of heart disease occurrence for a specific feature value and the overall rate. It tells you how much more or less likely individuals with a particular feature value are to have heart disease compared to the overall population. A positive difference indicates a higher likelihood, while a negative difference indicates a lower likelihood.
+2. `Difference`: This value represents the difference between the percentage of heart disease occurrence for a specific feature value and the overall rate. It tells us how much more or less likely individuals with a particular feature value are to have heart disease compared to the overall population. A positive difference indicates a higher likelihood, while a negative difference indicates a lower likelihood.
 
 3. `Ratio`: The ratio represents the difference relative to the overall rate. It quantifies how much the heart disease occurrence for a specific feature value deviates from the overall rate, considering the overall rate as the baseline. A ratio greater than 1 indicates a higher risk compared to the overall population, while a ratio less than 1 indicates a lower risk.
 
 4. `Risk`: This metric directly quantifies the likelihood of an event happening for a specific feature value, expressed as a percentage. It's easier to interpret as it directly answers the question: "What is the likelihood of heart disease for individuals with this feature value?"
 
-These values help you understand the relationship between different features and heart disease. Positive differences, ratios greater than 1, and risk values greater than 100% suggest a higher risk associated with a particular feature value, while negative differences, ratios less than 1, and risk values less than 100% suggest a lower risk. This information can be used to identify factors that may increase or decrease the risk of heart disease within the  dataset.
+These values help us understand the relationship between different features and heart disease. Positive differences, ratios greater than 1, and risk values greater than 100% suggest a higher risk associated with a particular feature value, while negative differences, ratios less than 1, and risk values less than 100% suggest a lower risk. This information can be used to identify factors that may increase or decrease the risk of heart disease within the  dataset.
 
 #### Mutual Information Score
 
@@ -236,7 +236,6 @@ race           0.001976
 - Logistic Regression Model (Model 0) has a good balance of precision and recall similar to the XGBoost Model.
 
 - Random Forest Model (Model 1) has high precision but an extremely low recall, meaning it's cautious in predicting positive cases but may miss many of them.
-
 
 Based on this analysis, we will choose XGBoost as our API model
 
@@ -382,7 +381,7 @@ pipenv install flask gunicorn scikit-learn
 
 ### Run the application locally
 
-Ensure you have `gunicorn` installed on your Linux server. You can then start the application using:
+Ensure we have `gunicorn` installed on our Linux server. We can then start the application using:
 
 ```bash
 gunicorn -b 0.0.0.0:8000 app:app
@@ -415,7 +414,7 @@ COPY bin/ /app/bin/
 COPY data_predict.py /app/
 COPY app.py /app/
 
-# Expose the port your Flask app runs on
+# Expose the port the Flask app runs on
 EXPOSE 8000
 
 # Run the Flask app with Gunicorn
@@ -425,7 +424,7 @@ CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000", "--workers", "4"]
 ### Docker Build
 
 
-- In the same directory as your `Dockerfile`, make sure you have the `Pipfile`, `Pipfile.lock`, and your Flask script (`app.py`).
+- In the same directory as the `Dockerfile`, make sure we have the `Pipfile`, `Pipfile.lock`, and the Flask script (`app.py`).
 
 - Build the Docker image using the following command (replace `your_image_tag` with a desired tag):
 
@@ -433,7 +432,8 @@ CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000", "--workers", "4"]
 docker build -t heart_disease_app .
 ```
 
-4. Once the image is built, you can run the Docker container using:
+- Once the image is built, we can run the Docker container using:
+- Shutdown the local API
 
 ```bash
 docker run -p 8000:8000 heart_disease_app
@@ -445,7 +445,7 @@ Make sure to adjust the necessary details according to your specific Flask app a
 
 ### Cloud Deployment
 
-**Install Azure CLI:** If you haven't already, install the Azure CLI on your machine. You can download it from the official website. 
+**Install Azure CLI:** If you haven't already, install the Azure CLI on your machine. We can download it from the official website. 
 
 #### Create an Azure function app
 
@@ -456,7 +456,7 @@ Make sure to adjust the necessary details according to your specific Flask app a
   - Get the storage connection string and configure the function
   
 > use the azure-deploy.sh
-> 
+
 ```bash 
 resourceGroupName="dev-ai-ml-group"
 storageAccountName="devaimlstorage"
@@ -479,10 +479,10 @@ connectionString=$(az storage account show-connection-string --name $storageAcco
 az functionapp config appsettings set --name $functionAppName --resource-group $resourceGroupName --settings AzureWebJobsStorage="$connectionString"
 ```
 
-- Build the function project
+#### Build the serverless function project
   - Using pipenv shell install azure-function dependencies
-  - Install the core tools and validate the verion
-  - create the function
+  - Install the core tools and validate the version
+  - create the function project
 
 ```bash
 pipenv install azure-functions
@@ -497,6 +497,7 @@ func init fn-ai-ml-heart-disease --python
 
 func new --name predict --template "HTTP trigger"
 
+# select the python option
 
 ```
 - Import the app.py code into the function __init__.py
@@ -521,6 +522,18 @@ cp ./Pipfile* ./fn-ai-ml-heart-disease
 cd fn-ai-ml-heart-disease
 func start
 ```
+
+The output should show:
+```bash
+Azure Functions Core Tools
+Core Tools Version:       3.0.5373 Commit hash: N/A  (64-bit)
+Function Runtime Version: 3.20.1.0
+Functions:
+
+        predict: [POST] http://localhost:7071/api/
+```
+
+> We can now switch to the data_test_api notebook and test the local serverless function.
 
 - Deploy the code to Azure
 

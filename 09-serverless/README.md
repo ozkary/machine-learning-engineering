@@ -159,7 +159,7 @@ Remember to consider the size of the TensorFlow Lite model and the inference lat
 
 ### Download and convert the image to TensorFlow Lite
 
-Certainly! This code defines a series of functions for downloading, preparing, and preprocessing an image. Let's go through each function:
+This code defines a series of functions for downloading, preparing, and preprocessing an image. Let's go through each function:
 
 - `download_image(url)`
 
@@ -252,7 +252,7 @@ def preprocess_image(img):
 
 To apply the TensorFlow Lite model to a new image, you need to follow these general steps:
 
-Certainly! This code defines a function `load_lite_model` to load a TensorFlow Lite (TFLite) model and allocate tensors. It then demonstrates how to use this function to perform inference on a normalized image using the loaded TFLite model. Let's break down the code:
+This code defines a function `load_lite_model` to load a TensorFlow Lite (TFLite) model and allocate tensors. It then demonstrates how to use this function to perform inference on a normalized image using the loaded TFLite model. Let's break down the code:
 
 ### `load_lite_model(path)`
 

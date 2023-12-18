@@ -1,0 +1,4 @@
+bmi,smoking,alcoholdrinking,stroke,physicalhealth,mentalhealth,diffwalking,sex,agecategory,race,diabetic,physicalactivity,genhealth,sleeptime,asthma,kidneydisease,skincancer
+40,0,0,0,0,0,1,Male,65-69,White,No,1,Good,10,0,0,0
+34,1,0,0,30,0,1,Male,60-64,White,Yes,0,Poor,15,1,0,0
+28,1,0,0,0,0,0,Female,55-59,White,No,1,Very good,5,0,0,0

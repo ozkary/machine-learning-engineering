@@ -136,7 +136,7 @@ print("Translation and text-to-speech synthesis in French completed. Output save
 
 ## Voice Cloning
 
-While I can certainly guide you through the process of a voice cloning project, it's important to note that implementing a full-fledged voice cloning system involves several complex steps, and creating one from scratch is beyond the scope of a single conversation. However, I can provide you with a simplified example to get started with voice cloning using the Tacotron 2 model and Hugging Face's Transformers library. Please keep in mind that for a production-level system, you would typically need a large dataset for training, more sophisticated models, and additional considerations for data privacy and ethical use.
+It's important to note that implementing a full-fledged voice cloning system involves several complex steps, and creating one from scratch is beyond the scope of a single conversation. However, I can provide you with a simplified example to get started with voice cloning using the Tacotron 2 model and Hugging Face's Transformers library. Please keep in mind that for a production-level system, you would typically need a large dataset for training, more sophisticated models, and additional considerations for data privacy and ethical use.
 
 ### Prerequisites:
 
