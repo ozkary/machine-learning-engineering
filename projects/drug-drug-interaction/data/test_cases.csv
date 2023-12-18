@@ -3,3 +3,7 @@ Prescription,Drug name,Smiles
 839,Formoterol,COC1=CC=C(CC(C)NCC(O)C2=CC(NC=O)=C(O)C=C2)C=C1
 1781,Ritonavir,CC(C)[C@H](NC(=O)N(C)CC1=CSC(=N1)C(C)C)C(=O)N[C@H](C[C@H](O)[C@H](CC1=CC=CC=C1)NC(=O)OCC1=CN=CS1)CC1=CC=CC=C1
 1781,Olodaterol,COC1=CC=C(CC(C)(C)NC[C@H](O)C2=C3OCC(=O)NC3=CC(O)=C2)C=C1
+61,Phentermine,CC(C)(N)CC1=CC=CC=C1
+61,Brexpiprazole,O=C1NC2=CC(OCCCCN3CCN(CC3)C3=C4C=CSC4=CC=C3)=CC=C2C=C1
+85,Mirtazapine,CN1CCN2C(C1)C1=CC=CC=C1CC1=C2N=CC=C1
+85,Phenylephrine,CNC[C@H](O)C1=CC(O)=CC=C1

@@ -94,6 +94,8 @@ These are the steps to analysis the data:
       - Calculate the SSP 
     - Importance analysis
 
+> Use the file data_analysis.ipynb
+
 ### Feature Analysis
 
 Based on the dataset, we have a mix of categorical and numerical features. We consider the following for processing:
@@ -165,6 +167,8 @@ Consequently, for our model evaluation, we have decided to utilize the SSP featu
   - f1_score
 - Export the code to ddi_lib
   - data_train.py
+
+> Use the file data_train.ipynb
 
 ### Data Split
 
@@ -280,6 +284,8 @@ For this analysis, we will evaluate three different networks. Starting from a si
 - Export the code to ddi_lib
   - data_train_mlp.py
 
+> Use the file data_predict_mlp.ipynb
+
 ### Data Split
 
 - Use a 60/20/20 distribution for train/val/test
@@ -344,3 +350,156 @@ Model 3 consistently outperforms the other models across all metrics, exhibiting
 
 We are using the XGBoost model for our predictions.
 
+- Load the ./data/test_cases.csv file
+  - Process the features and create the ssp value  
+- Load the model  
+  - Load the ./models/hd_xgboost_model.pkl.bin
+  - Load the ./models/hd_dictvectorizer.pkl.bin
+- Call Predict  
+  - Display the interaction type statement
+
+> Use the file data_predict.ipynb
+
+## Deployment
+
+### Run pipenv shell
+
+- Activate the pipenv shell in the working directory
+
+```bash
+cd projects/drug-drug-interaction
+pipenv shell
+
+```
+
+- Install Scikit-Learn, Flask and Gunicorn
+
+```bash
+pipenv lock
+pipenv install flask gunicorn scikit-learn rdkit xgboost pandas numpy matplotlib seaborn
+```
+
+### Create the Local API
+
+The local API runs as a Flask application with Python
+
+> See file  [Local Web Service](./app.py)
+
+#### Run the application locally
+
+Ensure we have `gunicorn` installed on our Linux server. We can then start the application using:
+
+```bash
+gunicorn -b 0.0.0.0:8000 app:app
+```
+> This must run at the pipenv prompt. The same way the dependencies were installed.
+
+This command starts Gunicorn and binds it to address 0.0.0.0 (meaning all available network interfaces) on port 8000, running your Flask app.
+
+> Test the local API using [Local Web Service] (./data_test_api.ipynb)
+
+### Docker Container
+
+We are using a Docker container to host the application and its dependencies.
+
+#### Docker file code
+
+```bash
+# Use the base image
+FROM svizor/zoomcamp-model:3.10.12-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the Pipenv files to the container
+COPY Pipfile Pipfile.lock /app/
+
+# Install pipenv and dependencies
+RUN pip install pipenv
+RUN pipenv install --system --deploy
+
+# copy the bin files
+COPY models/ /app/models/
+
+# copy the data files
+COPY data/interaction_types.csv /app/data/
+
+# Copy the DDI library
+COPY ddi_lib/ /app/ddi_lib/
+
+# Copy the Flask script to the container
+COPY app.py /app/
+
+# Expose the port the Flask app runs on
+EXPOSE 8000
+
+# Run the Flask app with Gunicorn
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000", "--workers", "4"]
+```
+### Docker Build
+
+- In the same directory as the `Dockerfile`, make sure we have the `Pipfile`, `Pipfile.lock`, and the Flask script (`app.py`).
+
+- Build the Docker image using the following command (replace `your_image_tag` with a desired tag):
+
+```bash
+docker build -t ozkary_ddi_api .
+```
+
+- Once the image is built, we can run the Docker container using:
+- Shutdown the local API
+
+```bash
+docker run -p 8000:8000 ozkary_ddi_api
+```
+
+This will start the Flask app inside the Docker container, and it will be accessible at `http://localhost:8000`.
+
+> Test the local API using [Container Web Service] (./data_test_api.ipynb)
+
+#### Cleanup Resources
+
+- Stop and remove the container image
+
+```python
+docker stop ozkary_ddi_api
+docker rmi ozkary_ddi_api:latest
+```
+
+### Cloud Deployment
+
+Follow these steps to create an Azure Cloud serverless API
+
+**Install Azure CLI:** If you haven't already, install the Azure CLI on your machine. We can download it from the official website. 
+
+#### Create an Azure function app
+
+- Build the cloud resources
+  - Create a resource group
+  - Create a storage
+  - Create the azure function
+  - Get the storage connection string and configure the function
+  
+> use the azure-deploy.sh
+
+```bash 
+resourceGroupName="dev-ai-ml-group"
+storageAccountName="devaimlstorage"
+functionAppName="ozkary-ai-ddi"
+location="EastUS2"
+
+# Create a resource group
+az group create --name $resourceGroupName --location $location
+
+# Create a storage account
+az storage account create --name $storageAccountName --resource-group $resourceGroupName --location $location --sku Standard_LRS
+
+# Create a function app
+az functionapp create --name $functionAppName --resource-group $resourceGroupName --consumption-plan-location $location --runtime python --runtime-version 3.8 --storage-account $storageAccountName --os-type Linux --functions-version 3
+
+# Retrieve the storage account connection string
+connectionString=$(az storage account show-connection-string --name $storageAccountName --resource-group $resourceGroupName --output tsv)
+
+# Configure the function app settings
+az functionapp config appsettings set --name $functionAppName --resource-group $resourceGroupName --settings AzureWebJobsStorage="$connectionString"
+```

@@ -9,7 +9,7 @@ import pandas as pd
 import sklearn
 import pickle
 from rdkit import Chem
-from rdkit.Chem import Draw, MolToSmiles, AllChem
+from rdkit.Chem import AllChem
 
 
 class DDIModelLoader():
@@ -93,21 +93,19 @@ class DDIPredictor:
         if self.interactions is None:
             self.load_interactions()
 
+        notes = []
         for result in results:
             # select the row with ddi_type = result
             ddi_type = int(result['result']) + 1
             ddi_row = self.interactions.loc[self.interactions['ddi_type'] == ddi_type]
             
-            # add one to the result to match the encoding during training
-            notes = []
+            # add one to the result to match the encoding during training            
             note = f'No interaction found for {result["drug1"]} and {result["drug2"]}'
             if ddi_row is not None and len(ddi_row) > 0:
-                note = ddi_row['description'].to_string(index=False).replace('#Drug1', result['drug1']).replace('#Drug2', result['drug2'])                
-                notes.append(note)
-            
+                note = ddi_row['description'].to_string(index=False).replace('#Drug1', result['drug1']).replace('#Drug2', result['drug2'])
             notes.append(note)
             
-            return notes
+        return notes
         
     def load_interactions(self):
         """ 
