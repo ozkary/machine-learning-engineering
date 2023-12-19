@@ -238,6 +238,22 @@ class DDIProcessData():
         print('y_test shape', y_test.shape)
         
         return X_train, X_val, y_train, y_val, X_test, y_test
+    
+    def preprocess_target(self, y):
+        """
+        Preprocess the target variable to make sure the data starts from 0 and is continuous
+        The target range starts at 1, so we need to subtract 1 from the target variable
+        """
+        # encode the target variable
+        min = y.min()
+        max = y.max()
+        y_encoded = y
+        
+        if min != 0:
+            print('Min target value is not 0, encoding  y - 1')
+            y_encoded = y - 1
+
+        return y_encoded
 
 def build_compare_metrics(df_metrics):
     # visualize the metrics
