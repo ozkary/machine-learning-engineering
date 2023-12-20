@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 import sklearn
 import json
 # import the data prediction module
-from ddi_lib import predict
+from ddi_lib_rel import predict
 
 # create a Flask app instance
 app = Flask(__name__)
