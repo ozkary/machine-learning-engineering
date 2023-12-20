@@ -47,7 +47,8 @@ In order to execute this project, we follow a series of steps for discovery and 
 - Data and feature analysis
   - [Step 1 - Data Analysis](./data_analysis.ipynb)  
 - Train the model using different algorithm to evaluate the best option
-  - [Step 2 - Model Training](./data_train.ipynb)
+  - [Step 2.1 - Model Training](./data_train.ipynb)
+  - [Step 2.2 - Neural Network Training](./data_train_mlp.ipynb)
 - Run test cases and predict results
   - [Step 3 - Model Prediction](./data_predict.ipynb)
 - Call the Web Service
@@ -56,13 +57,13 @@ In order to execute this project, we follow a series of steps for discovery and 
 ### Implementation and Delivery of the model
 
 - Train and model selection
-  - [Model Training](./data_train.py)
+  - [Model Training](./ddi_lib/data_train.py)
 - Prediction and test cases
-  - [Model Predict](./data_predict.py)
+  - [Model Predict](./ddi_lib/data_predict.py)
 - Web service app
   - [Web Service ](./app.py)
-- Azure Cloud Function
-  - [Cloud Function](./fn-ai-ml-ddi/)
+- Azure Cloud Function 
+  - [Cloud Function](./ozkary-ai-ddi/)
 
 ## Data Analysis - Exploratory Data Analysis (EDA)
 

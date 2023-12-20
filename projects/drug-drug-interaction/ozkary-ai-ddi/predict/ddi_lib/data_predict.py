@@ -54,7 +54,19 @@ class DDIPredictor:
         self.model = DDIModelLoader(model_path, encoder_path)
         self.interactions = None
         self.data_path = data_path
+        self.drug_pca_lookup = None
+        self.load_drug_pca_lookup()
 
+    def load_drug_pca_lookup(self):
+        """ 
+        Load the drug pca lookup from pickle file
+        """
+        if self.drug_pca_lookup is None:
+            pca_drugs = pd.read_csv(f'{self.data_path}drugbank_pca50.csv.gz',index_col=0)
+            pca_drugs['name'] = pca_drugs['name'].str.lower()
+            # convert drugs to a dictionary using name in lowercase as the key
+            self.drug_pca_lookup = pca_drugs.set_index('name').T.to_dict('list')
+            
     def predict(self, X):
         """ 
         Predict the results and map them to the original labels
@@ -71,14 +83,38 @@ class DDIPredictor:
         
         return None
     
+    def build_model_input(self, rxs, features=101):
+        """ 
+        Build the message to be returned using a pca lookup
+        """        
+        # select the mean of the pc_ columns from the dict_drugs
+        mean_pca = np.mean(list(self.drug_pca_lookup.values()), axis=0).tolist()
+
+        #for each unique drug name in rxs do a lookup to get the pca values
+        inputs = []
+        for rx in rxs:
+            # from the dict get all the keys with the drug names
+            pca_drug = []            
+            for label in ['drug1','drug2']:    
+                name = rx[label].lower()                                
+                pca = self.drug_pca_lookup[name] if name in self.drug_pca_lookup else mean_pca       
+                pca_drug = pca_drug + pca
+            pca_drug = pca_drug + [rx['ssp']]            
+            inputs = inputs + [pca_drug]
+      
+        # convert the list to a numpy array to see the shape
+        X = np.array(inputs)
+        print(X.shape)
+        
+        return X
+    
     def build_model_message(self, ssp_values, features=101):
         """ 
         Build the message to be returned
         """
 
         X = np.zeros((len(ssp_values), features))
-        for index, ssp in enumerate(ssp_values):    
-            # cast ssp as integer
+        for index, ssp in enumerate(ssp_values):            
             X[index,-1] = ssp
 
         print(X.shape)        
@@ -204,16 +240,16 @@ def predict(data, path = './'):
     print(prescriptions.values())
 
     # select all the ssp values from the list
-    ssp_values = [item['ssp'] for item in prescriptions.values()]
-    X = predictor.build_model_message(ssp_values)
-
+    ssp_values = [item['ssp'] for item in prescriptions.values()]    
+    # X = predictor.build_model_message(ssp_values)
+    X = predictor.build_model_input(prescriptions.values())
+    
     # run a prediction
     y_pred = predictor.predict(X)
-    print(y_pred)
-    for item in prescriptions.values():
-        index = 0    
-        item['result'] = y_pred[index]
-        index += 1
+    print('Predictions ', y_pred)
+    # for each y_pred value add it to the dictionary    
+    for index, item in enumerate(prescriptions.values()):
+        item['result'] = y_pred[index]  
 
     # print the results
     print(prescriptions.values())
@@ -230,5 +266,6 @@ if __name__ == '__main__':
     print('Running DDI main function')
 
     prescriptions = load_test_cases()
-    result = predict(prescriptions)
-    print(result)
+    results = predict(prescriptions)
+    for result in results:
+        print(result)

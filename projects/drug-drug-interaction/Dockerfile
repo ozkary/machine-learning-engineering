@@ -16,6 +16,7 @@ COPY models/ /app/models/
 
 # copy the data files
 COPY data/interaction_types.csv /app/data/
+COPY data/drugbank_pca50.csv.gz /app/data/
 
 # Copy the DDI library
 COPY ddi_lib/ /app/ddi_lib/
