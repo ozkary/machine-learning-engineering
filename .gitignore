@@ -165,3 +165,8 @@ cython_debug/
 08-deep-learning/**/*.jpg
 *.h5git
 *.tflite
+
+projects/census
+projects/drug-drug-interaction/data/ssp_interaction_type.csv.all.gz
+
+*.bin
