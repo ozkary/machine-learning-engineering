@@ -9,6 +9,7 @@ Welcome to the Machine Learning Engineering Repository, a comprehensive collecti
 - [Machine Learning Engineering](#machine-learning-engineering)
   - [Contents](#contents)
   - [Overview](#overview)
+    - [Announcement and Updates](#announcement-and-updates)
   - [Key Features](#key-features)
     - [Use Cases and Selecting Models](#use-cases-and-selecting-models)
   - [Getting Started](#getting-started)
@@ -26,6 +27,12 @@ Machine learning is transforming the way we approach complex problems and make d
 - Deployment and scaling strategies
 
 Whether you're just starting out or looking to expand your ML horizons, you'll find valuable content and practical code examples here.
+
+### Announcement and Updates
+
+> 👉 Join out newsletter and get updates on new content about Machine Learning Engineering & AI  [Sign up here](https://ozkary.com/newsletter)  
+> 👉 Follow us on [Twitter](https://twitter.com/ozkary)  
+
 
 ## Key Features
 
