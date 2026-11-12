@@ -13,6 +13,8 @@ Convolutional Neural Networks (CNNs) are a specialized class of deep neural netw
 
 [![Neural Network Model Analysis - Youtube](https://www.ozkary.dev/assets/2023/ozkary-neural-network-analysis.png)](https://youtu.be/OJjZGb7fmOo?si=TRxK13hoSJWdTy9r "Neural Network Model Analysis")
 
+> 📖 **Companion Article:** [AI Python TensorFlow Neural Network Analysis (ozkary.com)](https://www.ozkary.com/2023/10/ai-python-tensorflow-neural-network-analysis.html.html)
+
 ## Modeling
 
 Let's review the layers in the provided Convolutional Neural Network (CNN) and discuss the importance of each layer:
