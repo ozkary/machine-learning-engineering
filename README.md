@@ -1,10 +1,20 @@
 # Machine Learning Engineering: From Basics to Production MLOps
 
+[![GitHub stars](https://img.shields.io/github/stars/ozkary/machine-learning-engineering?style=social)](https://github.com/ozkary/machine-learning-engineering/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/ozkary/machine-learning-engineering?style=social)](https://github.com/ozkary/machine-learning-engineering/network/members)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.9+-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
+
 Welcome to the **Machine Learning Engineering** repository—a structured, comprehensive collection of resources, source code, interactive notebooks, and production deployment patterns designed to teach machine learning from first principles to scalable real-world architectures.
 
 Whether you are beginning your data science journey or mastering production engineering (MLOps), this repository guides you through algorithmic foundations, deep learning, containerization, serverless functions, and Kubernetes orchestration.
 
 ![Machine Learning Engineering: Basics to Production MLOps](./images/ozkary-machine-learning-engineering-banner.png "Machine Learning Engineering: Basics to Production MLOps")
+
+> ⭐ **Support this project:** If you find these guides, notebooks, and production code helpful, please give this repository a **Star** on GitHub!  
+>  
+> 👋 **Welcome DataTalks.Club & ML Zoomcamp learners!**  
+> Feel free to fork or bookmark this repository as a hands-on companion reference for your homework, midterm projects, and cloud deployments.
 
 ---
 
@@ -217,6 +227,7 @@ Deepen your understanding with technical writeups and architecture articles publ
 
 Stay up-to-date with tutorials, guides, and open-source releases:
 
+- ⭐ **Star the Repo:** If you find this curriculum helpful, [give it a star on GitHub](https://github.com/ozkary/machine-learning-engineering) to help other engineers and students discover it!
 - 📬 **Newsletter:** [Sign up for the ML Engineering & AI Newsletter](https://www.ozkary.com/newsletter)
 - 🐦 **Twitter / X:** Follow [@ozkary](https://twitter.com/ozkary)
 - 🤖 **Companion AI Agents Repo:** [ozkary/ai-engineering](https://github.com/ozkary/ai-engineering)
