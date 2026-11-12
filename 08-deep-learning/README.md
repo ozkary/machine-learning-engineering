@@ -13,6 +13,9 @@ Convolutional Neural Networks (CNNs) are a specialized class of deep neural netw
 
 [![Neural Network Model Analysis - Youtube](https://www.ozkary.dev/assets/2023/ozkary-neural-network-analysis.png)](https://youtu.be/OJjZGb7fmOo?si=TRxK13hoSJWdTy9r "Neural Network Model Analysis")
 
+> 🎓 **Harvard CS50 AI Spotlight:**  
+> This lecture and model analysis was created for **[Harvard's CS50 Introduction to Artificial Intelligence with Python](https://pll.harvard.edu/course/cs50s-introduction-artificial-intelligence-python)** certification curriculum, walking through convolutional neural network (CNN) architectures, convolutional kernel filtering, pooling layers, and model convergence.  
+>  
 > 📖 **Companion Article:** [AI Python TensorFlow Neural Network Analysis (ozkary.com)](https://www.ozkary.com/2023/10/ai-python-tensorflow-neural-network-analysis.html.html)
 
 ## Modeling
