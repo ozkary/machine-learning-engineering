@@ -1,5 +1,9 @@
 # Introduction to Machine Learning (ML)
 
+> 📖 **Companion Article & Video:**  
+> - Blog Post: [Discovering Machine Learning: A Primer Guide (ozkary.com)](https://www.ozkary.com/2025/02/discovering-machine-language-primer-guide.html)  
+> - Live Stream: [Discovering Machine Learning: A Primer Guide on YouTube](https://www.youtube.com/live/ZJDyXNuHrfE?si=wxmU4sgTXlJGq1QZ)
+
 ## What is Machine Learning?
 
 Machine Learning is a subset of artificial intelligence (AI) that focuses on enabling computers to learn and improve performance on a specific task without being explicitly programmed. In essence, it's about creating algorithms that can learn patterns from data and make predictions or decisions based on it.

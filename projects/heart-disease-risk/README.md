@@ -2,6 +2,13 @@
 
 Could Machine Learning help us find out, if I am at a risk of heart disease? Continue to read to learn how ML can help us.
 
+> 🏆 **Featured on Kaggle, Blog & YouTube:**  
+> This project has been expanded into an autonomous agent-driven clinical interview system.  
+> - 📖 **Technical Blog Post:** [AI Study: A Learning-Based Approach for Predicting Heart Disease (ozkary.com)](https://www.ozkary.com/2023/12/ai-learning-based-approach-predicting-heart-disease.html)  
+> - 📄 **Kaggle Writeup:** [AI Agents for Health Risk Assessment (VibeCoding Agents Capstone)](https://www.kaggle.com/competitions/vibecoding-agents-capstone-project/writeups/ai-agents-for-health-risk-assessment)  
+> - 📺 **Video Walkthrough:** [AI Agents for Health Risk Assessment on YouTube](https://youtu.be/6YrRqS8zA00?si=dbadR7FDY8tqIcCB)  
+> Discover how this repository's heart disease risk model is deployed with Model Context Protocol (MCP) tools and Google Cloud Run to provide conversational clinical risk evaluations.
+
 ## Problem Statement:
 Heart disease is a leading cause of mortality worldwide, and its early identification and risk assessment are critical for effective prevention and intervention. With the help of electronic health records (EHR) and a wealth of health-related data, there is a significant opportunity to leverage machine learning techniques for predicting and assessing the risk of heart disease in individuals.
 
